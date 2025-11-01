@@ -35,7 +35,7 @@ export default function ParticlesBg() {
       <motion.div
         animate={{ x: [0, 200, -150, 0], y: [0, -100, 150, 0], scale: [1, 1.5, 0.7, 1], opacity: [0.3, 0.6, 0.1, 0.3], rotate: [0, 180, 360] }}
         transition={{ duration: 18, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute top-[20%] left-[30%] w-80 h-80 rounded-full"
+        className="absolute top-[20%] left-[30%] w-80 h-80 rounded-full hidden md:block"
         style={{
           background:
             'radial-gradient(circle, rgba(6,182,212,0.5) 0%, rgba(6,182,212,0.2) 50%, rgba(6,182,212,0.05) 80%, transparent 100%)',
@@ -47,7 +47,7 @@ export default function ParticlesBg() {
       <motion.div
         animate={{ x: [0, -150, 100, 0], y: [0, 120, -80, 0], scale: [0.8, 1.6, 0.9, 0.8], opacity: [0.2, 0.5, 0.1, 0.2], rotate: [360, 180, 0] }}
         transition={{ duration: 22, repeat: Infinity, ease: 'easeInOut', delay: 3 }}
-        className="absolute bottom-[25%] right-[25%] w-72 h-72 rounded-full"
+        className="absolute bottom-[25%] right-[25%] w-72 h-72 rounded-full hidden md:block"
         style={{
           background:
             'radial-gradient(circle, rgba(168,85,247,0.6) 0%, rgba(168,85,247,0.3) 50%, rgba(168,85,247,0.1) 80%, transparent 100%)',
@@ -71,7 +71,7 @@ export default function ParticlesBg() {
               rotate: [0, 360, 180, 0]
             }}
             transition={{ duration: randomDuration, delay: randomDelay, repeat: Infinity, ease: 'easeInOut' }}
-            className="absolute rounded-full"
+            className={`absolute rounded-full ${i >= 5 ? 'hidden md:block' : ''}`}
             style={{
               left: `${10 + i * 6}%`,
               top: `${5 + i * 7}%`,
@@ -107,13 +107,13 @@ export default function ParticlesBg() {
       <motion.div
         animate={{ rotate: [0, 360], x: [0, 100, -50, 0], y: [0, -50, 100, 0] }}
         transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
-        className="absolute top-[10%] left-[10%] w-20 h-20 border-2 border-blue-400/20 rounded-lg"
+        className="absolute top-[10%] left-[10%] w-20 h-20 border-2 border-blue-400/20 rounded-lg hidden md:block"
         style={{ filter: 'blur(1px)' }}
       />
       <motion.div
         animate={{ rotate: [360, 0], x: [0, -80, 120, 0], y: [0, 80, -60, 0] }}
         transition={{ duration: 35, repeat: Infinity, ease: 'linear' }}
-        className="absolute bottom-[15%] right-[15%] w-16 h-16 border-2 border-purple-400/20 rounded-full"
+        className="absolute bottom-[15%] right-[15%] w-16 h-16 border-2 border-purple-400/20 rounded-full hidden md:block"
         style={{ filter: 'blur(1px)' }}
       />
 
