@@ -32,16 +32,16 @@ const AboutCodeBlock = () => {
       {/* Inner div for background and content (Unchanged) */}
       <div className="bg-slate-900 rounded-[7px] overflow-hidden">
         {/* Code Editor Header (Unchanged) */}
-        <div className="flex items-center px-3 md:px-4 py-1.5 md:py-2 bg-slate-800/50 border-b border-slate-700">
-          <div className="flex space-x-1.5 md:space-x-2">
-            <span className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-red-500"></span>
-            <span className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-yellow-500"></span>
-            <span className="w-2.5 h-2.5 md:w-3 md:h-3 rounded-full bg-green-500"></span>
+        <div className="flex items-center px-2 md:px-4 py-1 md:py-2 bg-slate-800/50 border-b border-slate-700">
+          <div className="flex space-x-1 md:space-x-2">
+            <span className="w-2 h-2 md:w-3 md:h-3 rounded-full bg-red-500"></span>
+            <span className="w-2 h-2 md:w-3 md:h-3 rounded-full bg-yellow-500"></span>
+            <span className="w-2 h-2 md:w-3 md:h-3 rounded-full bg-green-500"></span>
           </div>
-          <span className="ml-3 md:ml-4 text-[10px] md:text-xs text-slate-400">AboutMe.js</span>
+          <span className="ml-2 md:ml-4 text-[9px] md:text-xs text-slate-400">AboutMe.js</span>
         </div>
         {/* Code Content (Unchanged) */}
-        <pre className="p-3 md:p-5 lg:p-6 text-[10px] leading-tight sm:text-xs sm:leading-relaxed md:text-sm md:leading-relaxed lg:text-base lg:leading-relaxed text-slate-300 font-mono">
+        <pre className="p-2 md:p-5 lg:p-6 text-[9px] leading-snug sm:text-xs sm:leading-relaxed md:text-sm md:leading-relaxed lg:text-base lg:leading-relaxed text-slate-300 font-mono overflow-x-auto">
           <code>
             <Keyword>const</Keyword> <Variable>MohammadAlim</Variable> = {'{\n'}
             {'  '}<Property>name</Property>: <String>Mohammad Alim</String>,{'\n'}
@@ -87,26 +87,26 @@ const AboutCodeBlock = () => {
 // --- Main About Component ---
 export default function About() {
   return (
-    <section id="about" className="section py-10 md:py-24" aria-label="About Me">
-      <div className="container-lg px-4 md:px-6">
+    <section id="about" className="section py-8 md:py-24" aria-label="About Me">
+      <div className="container-lg px-3 md:px-6">
         {/* Grid Layout */}
-        <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-start">
+        <div className="grid md:grid-cols-2 gap-6 md:gap-16 items-start">
 
           {/* --- Left Column: Enhanced Text Content --- */}
-          <div className="space-y-6 md:space-y-8 md:mt-4">
+          <div className="space-y-4 md:space-y-8 md:mt-4">
             {/* Heading with gradient accent and decorative line */}
-            <div className="space-y-3 md:space-y-4">
+            <div className="space-y-2 md:space-y-4">
               <div className="inline-flex items-center gap-2 md:gap-3">
-                <div className="h-[2px] md:h-[3px] w-6 md:w-12 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500" />
-                <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-400 leading-tight">
+                <div className="h-[2px] md:h-[3px] w-5 md:w-12 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500" />
+                <h2 className="text-xl sm:text-3xl md:text-5xl lg:text-6xl font-black tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-400 leading-tight">
                   WHO I AM?
                 </h2>
               </div>
-              <div className="h-[2px] md:h-1 w-16 md:w-32 rounded-full bg-gradient-to-r from-cyan-500/60 via-blue-500/40 to-transparent" />
+              <div className="h-[2px] md:h-1 w-12 md:w-32 rounded-full bg-gradient-to-r from-cyan-500/60 via-blue-500/40 to-transparent" />
             </div>
 
             {/* Content paragraphs with enhanced typography */}
-            <div className="space-y-4 md:space-y-6 text-[13px] leading-relaxed sm:text-base md:text-lg">
+            <div className="space-y-3 md:space-y-6 text-xs leading-relaxed sm:text-base md:text-lg">
               <p className="text-neutral-200 font-light tracking-wide text-justify md:text-left">
                 I'm{' '}
                 <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-blue-400">
@@ -134,8 +134,8 @@ export default function About() {
             </div>
 
             {/* Decorative quote or highlight */}
-            <div className="relative pl-3 md:pl-6 py-3 md:py-4 border-l-[3px] md:border-l-4 border-cyan-400 bg-white/5 backdrop-blur-sm rounded-r-lg">
-              <p className="text-cyan-200 font-medium italic text-xs sm:text-sm md:text-lg leading-relaxed">
+            <div className="relative pl-2 md:pl-6 py-2 md:py-4 border-l-2 md:border-l-4 border-cyan-400 bg-white/5 backdrop-blur-sm rounded-r-lg">
+              <p className="text-cyan-200 font-medium italic text-[10px] sm:text-sm md:text-lg leading-relaxed">
                 "Building solutions that bridge innovation and functionality."
               </p>
             </div>

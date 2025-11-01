@@ -55,10 +55,10 @@ export default function Achievements() {
       <div className="container-lg px-4 md:px-6">
         {/* Section Title - Matching other sections */}
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
+          initial={{ opacity: 0, y: -30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
           className="mb-12 md:mb-16"
         >
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white mb-3">
@@ -71,10 +71,14 @@ export default function Achievements() {
         <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto items-stretch">
           {/* Card 1: Leadership */}
           <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ amount: 0.3 }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
+            initial={{ opacity: 0, y: 50, scale: 0.9 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ amount: 0.2 }}
+            transition={{ 
+              duration: 0.7, 
+              ease: [0.22, 1, 0.36, 1],
+              delay: 0.1
+            }}
             className="rounded-lg p-[2px] bg-gradient-to-br from-blue-500/50 via-purple-500/50 to-blue-500/50 shadow-xl backdrop-blur-sm hover:shadow-2xl hover:shadow-blue-500/30 transition-all duration-300 h-full"
           >
             <div className="bg-slate-900 rounded-[7px] overflow-hidden h-full flex flex-col">

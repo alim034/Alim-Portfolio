@@ -14,7 +14,7 @@ export default function Hero() {
   const [idx, setIdx] = useState(0)
 
   // Prefer external resume link via env; fallback to local file
-  const resumeUrl = import.meta.env.VITE_RESUME_URL || 'https://drive.google.com/file/d/1ZsQIFA76l2Vv_SPSJOTr1xVW4D7LLwqk/view?usp=sharing'
+  const resumeUrl = import.meta.env.VITE_RESUME_URL || 'https://drive.google.com/file/d/1_5EyNIl5vTnmFjsZGv7rfw8BC4jrDDye/view?usp=sharing'
   const isExternalResume = /^https?:\/\//.test(resumeUrl)
 
   useEffect(() => {
@@ -95,7 +95,7 @@ export default function Hero() {
             {[
               { href: 'https://www.linkedin.com/in/mohammad-alim-7a8a52289/', label: 'LinkedIn', Icon: FaLinkedin },
               { href: 'https://github.com/alim034', label: 'GitHub', Icon: FaGithub },
-              { href: 'https://leetcode.com/u/mohammad_alim_1907/', label: 'LeetCode', Icon: SiLeetcode },
+              { href: 'https://leetcode.com/u/mohammad_alim/', label: 'LeetCode', Icon: SiLeetcode },
               { href: 'https://www.instagram.com/_justalim__?igsh=bmtpdG9zcGd2ZjBw', label: 'Instagram', Icon: FaInstagram },
             ].map(({ href, label, Icon }) => (
               <a
