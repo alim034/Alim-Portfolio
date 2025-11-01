@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --container: 1200px;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* Prevent sticky header from covering anchor targets */
+  scroll-padding-top: 92px;
+}
+
+body {
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Helvetica Neue, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  @apply text-neutral-800 dark:text-neutral-200 transition-colors duration-300;
+}
+
+.container-lg {
+  width: 100%;
+  max-width: var(--container);
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+.section {
+  padding-block: 4rem;
+}
+
+.section-title {
+  @apply text-2xl md:text-3xl font-bold mb-6;
+}
+
+/* Subtle animated background */
+.animated-gradient {
+  position: absolute;
+  inset: -20% -10% -10% -20%;
+  background: radial-gradient(40% 40% at 10% 20%, rgba(63, 127, 255, 0.25), transparent),
+    radial-gradient(35% 35% at 80% 10%, rgba(35, 74, 217, 0.2), transparent),
+    radial-gradient(30% 30% at 50% 80%, rgba(63, 127, 255, 0.15), transparent);
+  filter: blur(40px);
+  animation: float 18s ease-in-out infinite alternate;
+}
+
+.dots {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(currentColor 0.5px, transparent 0.5px);
+  background-size: 16px 16px;
+  color: rgba(0, 0, 0, 0.04);
+}
+
+@media (prefers-color-scheme: dark) {
+  .dots { color: rgba(255, 255, 255, 0.06); }
+}
+
+@keyframes float {
+  from { transform: translate3d(0, 0, 0) scale(1); }
+  to { transform: translate3d(2%, -1%, 0) scale(1.05); }
+}
+
+@keyframes gradient {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
