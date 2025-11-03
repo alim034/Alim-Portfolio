@@ -1,8 +1,10 @@
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
 import { useEffect, useState } from 'react';
 
 const PageLoader = () => {
   const [isLoading, setIsLoading] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
 
   useEffect(() => {
     // Simulate loading time
@@ -10,8 +12,25 @@ const PageLoader = () => {
       setIsLoading(false);
     }, 2800);
 
-    return () => clearTimeout(timer);
+    // Track mobile viewport to tone down animations for small screens
+    const mq = window.matchMedia('(max-width: 640px)');
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener?.('change', update);
+
+    return () => {
+      clearTimeout(timer);
+      mq.removeEventListener?.('change', update);
+    };
   }, []);
+
+  // Safer window dimensions for particles
+  const viewportW = typeof window !== 'undefined' ? window.innerWidth : 360;
+  const viewportH = typeof window !== 'undefined' ? window.innerHeight : 640;
+
+  // Reduce effects on mobile or when user prefers reduced motion
+  const lightMode = isMobile || prefersReducedMotion;
+  const particleCount = lightMode ? 8 : 20;
 
   return (
     <AnimatePresence mode="wait">
@@ -24,36 +43,51 @@ const PageLoader = () => {
             opacity: { duration: 0.4, ease: "easeOut" },
             scale: { duration: 0.5, ease: "easeInOut" }
           }}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-900 to-slate-900 overflow-hidden"
         >
           {/* Animated background gradient */}
           <div className="absolute inset-0 overflow-hidden">
-            <motion.div
-              animate={{
-                scale: [1, 1.2, 1],
-                rotate: [0, 90, 0],
-              }}
-              transition={{
-                duration: 8,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-              className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-cyan-500/15 md:from-cyan-500/20 via-sky-500/8 md:via-sky-500/10 to-violet-500/15 md:to-violet-500/20 blur-3xl"
-              style={{ willChange: 'transform' }}
-            />
-            <motion.div
-              animate={{
-                scale: [1.2, 1, 1.2],
-                rotate: [90, 0, 90],
-              }}
-              transition={{
-                duration: 8,
-                repeat: Infinity,
-                ease: "easeInOut"
-              }}
-              className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-to-tl from-violet-500/15 md:from-violet-500/20 via-fuchsia-500/8 md:via-fuchsia-500/10 to-cyan-500/15 md:to-cyan-500/20 blur-3xl"
-              style={{ willChange: 'transform' }}
-            />
+            {lightMode ? (
+              <>
+                <div
+                  className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-cyan-500/10 via-sky-500/5 to-violet-500/10 blur-2xl md:blur-3xl"
+                  style={{ willChange: 'auto' }}
+                />
+                <div
+                  className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-to-tl from-violet-500/10 via-fuchsia-500/5 to-cyan-500/10 blur-2xl md:blur-3xl"
+                  style={{ willChange: 'auto' }}
+                />
+              </>
+            ) : (
+              <>
+                <motion.div
+                  animate={{
+                    scale: [1, 1.2, 1],
+                    rotate: [0, 90, 0],
+                  }}
+                  transition={{
+                    duration: 8,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-cyan-500/15 md:from-cyan-500/20 via-sky-500/8 md:via-sky-500/10 to-violet-500/15 md:to-violet-500/20 blur-3xl transform-gpu"
+                  style={{ willChange: 'transform' }}
+                />
+                <motion.div
+                  animate={{
+                    scale: [1.2, 1, 1.2],
+                    rotate: [90, 0, 90],
+                  }}
+                  transition={{
+                    duration: 8,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-to-tl from-violet-500/15 md:from-violet-500/20 via-fuchsia-500/8 md:via-fuchsia-500/10 to-cyan-500/15 md:to-cyan-500/20 blur-3xl transform-gpu"
+                  style={{ willChange: 'transform' }}
+                />
+              </>
+            )}
           </div>
 
           {/* Main loader content */}
@@ -64,7 +98,7 @@ const PageLoader = () => {
             className="relative z-10 flex flex-col items-center gap-8"
           >
             {/* Animated rings */}
-            <div className="relative w-32 h-32">
+            <div className="relative w-28 h-28 md:w-32 md:h-32">
               {/* Outer ring */}
               <motion.div
                 animate={{
@@ -72,10 +106,10 @@ const PageLoader = () => {
                   scale: [1, 1.1, 1],
                 }}
                 transition={{
-                  rotate: { duration: 3, repeat: Infinity, ease: "linear" },
-                  scale: { duration: 2, repeat: Infinity, ease: "easeInOut" }
+                  rotate: { duration: lightMode ? 4 : 3, repeat: Infinity, ease: "linear" },
+                  scale: { duration: lightMode ? 3 : 2, repeat: Infinity, ease: "easeInOut" }
                 }}
-                className="absolute inset-0 rounded-full border-4 border-transparent border-t-cyan-400 border-r-sky-400"
+                className="absolute inset-0 rounded-full border-3 md:border-4 border-transparent border-t-cyan-400 border-r-sky-400 will-change-transform transform-gpu"
               />
               
               {/* Middle ring */}
@@ -85,10 +119,10 @@ const PageLoader = () => {
                   scale: [1, 0.9, 1],
                 }}
                 transition={{
-                  rotate: { duration: 2.5, repeat: Infinity, ease: "linear" },
-                  scale: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.3 }
+                  rotate: { duration: lightMode ? 3.2 : 2.5, repeat: Infinity, ease: "linear" },
+                  scale: { duration: lightMode ? 3 : 2, repeat: Infinity, ease: "easeInOut", delay: 0.3 }
                 }}
-                className="absolute inset-2 rounded-full border-4 border-transparent border-b-violet-400 border-l-fuchsia-400"
+                className="absolute inset-2 rounded-full border-3 md:border-4 border-transparent border-b-violet-400 border-l-fuchsia-400 will-change-transform transform-gpu"
               />
               
               {/* Inner ring */}
@@ -98,24 +132,24 @@ const PageLoader = () => {
                   scale: [1, 1.15, 1],
                 }}
                 transition={{
-                  rotate: { duration: 2, repeat: Infinity, ease: "linear" },
-                  scale: { duration: 2, repeat: Infinity, ease: "easeInOut", delay: 0.6 }
+                  rotate: { duration: lightMode ? 2.8 : 2, repeat: Infinity, ease: "linear" },
+                  scale: { duration: lightMode ? 3 : 2, repeat: Infinity, ease: "easeInOut", delay: 0.6 }
                 }}
-                className="absolute inset-4 rounded-full border-4 border-transparent border-t-sky-400 border-r-cyan-400"
+                className="absolute inset-4 rounded-full border-3 md:border-4 border-transparent border-t-sky-400 border-r-cyan-400 will-change-transform transform-gpu"
               />
 
               {/* Center glow */}
               <motion.div
                 animate={{
-                  scale: [1, 1.3, 1],
+                  scale: [1, 1.25, 1],
                   opacity: [0.5, 0.8, 0.5],
                 }}
                 transition={{
-                  duration: 2,
+                  duration: lightMode ? 2.8 : 2,
                   repeat: Infinity,
                   ease: "easeInOut"
                 }}
-                className="absolute inset-0 m-auto w-16 h-16 rounded-full bg-gradient-to-br from-cyan-400 via-sky-400 to-violet-400 blur-xl"
+                className="absolute inset-0 m-auto w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-cyan-400 via-sky-400 to-violet-400 blur-lg md:blur-xl"
               />
             </div>
 
@@ -135,7 +169,7 @@ const PageLoader = () => {
                   repeat: Infinity,
                   ease: "linear"
                 }}
-                className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-cyan-400 via-sky-400 via-violet-400 to-fuchsia-400 bg-clip-text text-transparent"
+                className="text-2xl md:text-4xl font-bold bg-gradient-to-r from-cyan-400 via-sky-400 via-violet-400 to-fuchsia-400 bg-clip-text text-transparent"
                 style={{ backgroundSize: '200% 200%' }}
               >
                 Mohammad Alim
@@ -176,7 +210,7 @@ const PageLoader = () => {
                 initial={{ x: '-100%' }}
                 animate={{ x: '100%' }}
                 transition={{
-                  duration: 2,
+                  duration: lightMode ? 2.6 : 2,
                   repeat: Infinity,
                   ease: "easeInOut",
                   delay: 0.3
@@ -187,28 +221,28 @@ const PageLoader = () => {
           </motion.div>
 
           {/* Floating particles */}
-          {[...Array(20)].map((_, i) => (
+          {[...Array(particleCount)].map((_, i) => (
             <motion.div
               key={i}
               initial={{
-                x: Math.random() * window.innerWidth,
-                y: Math.random() * window.innerHeight,
+                x: Math.random() * viewportW,
+                y: Math.random() * viewportH,
                 scale: 0,
                 opacity: 0,
               }}
               animate={{
-                y: [null, Math.random() * window.innerHeight],
-                x: [null, Math.random() * window.innerWidth],
-                scale: [0, Math.random() * 1 + 0.5, 0],
-                opacity: [0, 0.6, 0],
+                y: [null, Math.random() * viewportH],
+                x: [null, Math.random() * viewportW],
+                scale: [0, Math.random() * (lightMode ? 0.8 : 1) + 0.4, 0],
+                opacity: [0, lightMode ? 0.45 : 0.6, 0],
               }}
               transition={{
-                duration: Math.random() * 3 + 2,
+                duration: (lightMode ? 3.5 : 2) + Math.random() * (lightMode ? 2.5 : 3),
                 repeat: Infinity,
                 delay: Math.random() * 2,
                 ease: "easeInOut"
               }}
-              className="absolute w-1 h-1 rounded-full bg-cyan-400"
+              className="absolute w-1 h-1 rounded-full bg-cyan-400 transform-gpu"
               style={{
                 boxShadow: '0 0 10px rgba(34, 211, 238, 0.8)',
               }}
