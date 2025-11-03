@@ -75,15 +75,24 @@ const sectionVariants = {
     visible: {
         opacity: 1,
         transition: {
-            duration: 0.5,
-            staggerChildren: 0.1,
+            duration: 0.6,
+            staggerChildren: 0.12,
+            ease: [0.25, 0.1, 0.25, 1]
         },
     },
 };
 
 const cardVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+    hidden: { opacity: 0, y: 40, scale: 0.95 },
+    visible: { 
+        opacity: 1, 
+        y: 0, 
+        scale: 1,
+        transition: { 
+            duration: 0.7, 
+            ease: [0.25, 0.1, 0.25, 1]
+        } 
+    },
 };
 
 export default function Skills() {
@@ -92,10 +101,10 @@ export default function Skills() {
             <div className="container-lg px-4 md:px-6">
                 {/* Section Title */}
                 <motion.div
-                    initial={{ opacity: 0, y: -20 }}
+                    initial={{ opacity: 0, y: 30 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.5 }}
-                    transition={{ duration: 0.6 }}
+                    viewport={{ once: false, amount: 0.3 }}
+                    transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
                     className="mb-12 md:mb-16"
                 >
                     <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white mb-3">
@@ -109,15 +118,15 @@ export default function Skills() {
                     variants={sectionVariants}
                     initial="hidden"
                     whileInView="visible"
-                    viewport={{ once: true, amount: 0.1 }}
+                    viewport={{ once: false, amount: 0.15 }}
                     className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
                 >
                     {groups.map((g) => (
                         <motion.div
                             key={g.title}
                             variants={cardVariants}
-                            whileHover={{ y: -5 }}
-                            transition={{ type: 'spring', stiffness: 200, damping: 15 }}
+                            whileHover={{ y: -8, scale: 1.02 }}
+                            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
                             className="group relative rounded-2xl overflow-hidden p-7 md:p-8
                                        backdrop-blur-md
                                        border-2 shadow-lg shadow-black/30
@@ -157,8 +166,8 @@ export default function Skills() {
                                     return (
                                         <motion.div
                                             key={item.name}
-                                            whileHover={{ scale: 1.08, y: -4 }}
-                                            transition={{ type: 'spring', stiffness: 500, damping: 20 }}
+                                            whileHover={{ scale: 1.05, y: -3 }}
+                                            transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                                             onMouseEnter={() => setIsHovered(true)}
                                             onMouseLeave={() => setIsHovered(false)}
                                             className={`group/item relative flex items-center gap-2.5 px-4 py-3 rounded-xl

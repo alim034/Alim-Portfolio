@@ -36,9 +36,10 @@ const PageLoader = () => {
               transition={{
                 duration: 8,
                 repeat: Infinity,
-                ease: "linear"
+                ease: "easeInOut"
               }}
-              className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-cyan-500/20 via-sky-500/10 to-violet-500/20 blur-3xl"
+              className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-cyan-500/15 md:from-cyan-500/20 via-sky-500/8 md:via-sky-500/10 to-violet-500/15 md:to-violet-500/20 blur-3xl"
+              style={{ willChange: 'transform' }}
             />
             <motion.div
               animate={{
@@ -48,9 +49,10 @@ const PageLoader = () => {
               transition={{
                 duration: 8,
                 repeat: Infinity,
-                ease: "linear"
+                ease: "easeInOut"
               }}
-              className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-to-tl from-violet-500/20 via-fuchsia-500/10 to-cyan-500/20 blur-3xl"
+              className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-to-tl from-violet-500/15 md:from-violet-500/20 via-fuchsia-500/8 md:via-fuchsia-500/10 to-cyan-500/15 md:to-cyan-500/20 blur-3xl"
+              style={{ willChange: 'transform' }}
             />
           </div>
 

@@ -19,10 +19,14 @@ export default function Projects() {
             <motion.article 
               key={p.id} 
               className="group"
-              initial={{ opacity: 0, x: idx % 2 === 0 ? -40 : 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ amount: 0.3 }}
-              transition={{ duration: 0.6, ease: 'easeOut' }}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ amount: 0.2, once: false }}
+              transition={{ 
+                duration: 0.7, 
+                ease: [0.25, 0.1, 0.25, 1],
+                delay: idx * 0.15
+              }}
             >
               {/* Code Editor Style Card */}
               <div className="rounded-lg p-[2px] bg-gradient-to-br from-blue-500/50 via-purple-500/50 to-blue-500/50 shadow-xl backdrop-blur-sm

@@ -7,9 +7,9 @@ import { FiDownload, FiUserPlus } from 'react-icons/fi'
 export default function Hero() {
   const roles = [
     'MERN Developer',
-    'Problem Solver',
-    'Innovation Seeker',
-    'Web Development Enthusiast',
+    'Innovative Problem Solver',
+    'Backend Developer',
+    'Tech Community Contributor',
   ]
   const [idx, setIdx] = useState(0)
 

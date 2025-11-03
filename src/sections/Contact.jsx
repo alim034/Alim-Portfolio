@@ -17,12 +17,13 @@ const FormInput = ({ type = 'text', name, label, required = true, isTextArea = f
       name={name}
       id={name}
       required={required}
-      className="peer block w-full appearance-none border-0 border-b-2 border-slate-700 bg-transparent px-0 py-2.5 text-sm text-slate-100 placeholder-transparent focus:border-cyan-400 focus:outline-none focus:ring-0"
+      className="peer block w-full appearance-none border-0 border-b-2 border-slate-700 bg-transparent px-0 py-2.5 text-sm text-slate-100 placeholder-transparent focus:border-cyan-400 focus:outline-none focus:ring-0 autofill:bg-transparent autofill:text-slate-100 autofill:shadow-[0_0_0_30px_rgb(15,23,42)_inset]"
       placeholder=" " // Required for the floating label
+      autoComplete={type === 'email' ? 'email' : name === 'from_name' ? 'name' : 'off'}
     />
     <label
       htmlFor={name}
-      className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-slate-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-cyan-400"
+      className="absolute top-3 -z-10 origin-[0] -translate-y-6 scale-75 transform text-sm text-slate-400 duration-300 peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:left-0 peer-focus:-translate-y-6 peer-focus:scale-75 peer-focus:text-cyan-400 peer-autofill:-translate-y-6 peer-autofill:scale-75"
     >
       {label}
       {required && <span className="text-red-500 ml-1">*</span>}
@@ -69,6 +70,19 @@ export default function Contact() {
   const formRef = useRef(null)
   const [status, setStatus] = useState('idle')
   const toEmail = import.meta.env.VITE_EMAIL_TO_EMAIL || 'alimmohammad034@gmail.com'
+
+  // Style for autofill to match dark theme
+  const autofillStyle = `
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+      -webkit-box-shadow: 0 0 0 30px rgb(15, 23, 42) inset !important;
+      -webkit-text-fill-color: rgb(226, 232, 240) !important;
+      caret-color: rgb(34, 211, 238) !important;
+      transition: background-color 5000s ease-in-out 0s;
+    }
+  `
 
   const onSubmit = async (e) => {
     e.preventDefault()
@@ -154,6 +168,9 @@ export default function Contact() {
 
   return (
     <section id="contact" className="section relative overflow-hidden py-16 md:py-24" aria-label="Contact">
+      {/* Autofill styling */}
+      <style>{autofillStyle}</style>
+      
       {/* Background specific to this section */}
       <Suspense fallback={null}>
         <SectionBackground />
