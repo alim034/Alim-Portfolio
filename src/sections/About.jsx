@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 // --- Syntax Highlighting Components (Unchanged) ---
 const Keyword = ({ children }) => <span className="text-pink-400">{children}</span>;
@@ -87,13 +88,19 @@ const AboutCodeBlock = () => {
 // --- Main About Component ---
 export default function About() {
   return (
-    <section id="about" className="section py-8 md:py-24" aria-label="About Me">
+    <section id="about" className="section py-8 md:py-24 scroll-mt-24 md:scroll-mt-32" aria-label="About Me">
       <div className="container-lg px-3 md:px-6">
         {/* Grid Layout */}
         <div className="grid md:grid-cols-2 gap-6 md:gap-16 items-start">
 
           {/* --- Left Column: Enhanced Text Content --- */}
-          <div className="space-y-4 md:space-y-8 md:mt-4">
+          <motion.div
+            className="space-y-4 md:space-y-8 md:mt-4"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+          >
             {/* Heading with gradient accent and decorative line */}
             <div className="space-y-2 md:space-y-4">
               <div className="inline-flex items-center gap-2 md:gap-3">
@@ -139,12 +146,18 @@ export default function About() {
                 "Building solutions that bridge innovation and functionality."
               </p>
             </div>
-          </div>
+          </motion.div>
 
           {/* --- Right Column: Code Block (Unchanged structure) --- */}
-          <div className="w-full mx-auto md:mx-0 md:max-w-2xl lg:max-w-xl">
-             <AboutCodeBlock />
-          </div>
+          <motion.div
+            className="w-full mx-auto md:mx-0 md:max-w-2xl lg:max-w-xl"
+            initial={{ opacity: 0, y: 28 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, amount: 0.25 }}
+            transition={{ duration: 0.65, ease: [0.25, 0.1, 0.25, 1], delay: 0.08 }}
+          >
+            <AboutCodeBlock />
+          </motion.div>
 
         </div>
       </div>

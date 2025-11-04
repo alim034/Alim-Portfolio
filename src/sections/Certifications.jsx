@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { FaCertificate, FaAward, FaCode, FaDatabase, FaPython, FaReact, FaJava, FaExternalLinkAlt } from 'react-icons/fa';
 import { SiMysql, SiUdemy } from 'react-icons/si';
 import { HiAcademicCap } from 'react-icons/hi2';
@@ -73,12 +73,39 @@ const certificates = [
   }
 ];
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } },
+// Build card variants with reduced-motion awareness for smoother, natural entrance
+const makeCardVariants = (reduced) => ({
+  hidden: { opacity: 0, y: reduced ? 0 : 22 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: reduced ? 0.35 : 0.55,
+      ease: [0.22, 1, 0.36, 1], // smooth outCubic-like
+    },
+  },
+});
+
+// Container variants to stagger child card animations
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.12,
+      delayChildren: 0.05,
+    },
+  },
 };
 
 export default function Certifications() {
+  const prefersReducedMotion = useReducedMotion();
+  const cardVariants = makeCardVariants(prefersReducedMotion);
+  const hoverTransition = {
+    type: 'spring',
+    stiffness: prefersReducedMotion ? 200 : 230,
+    damping: prefersReducedMotion ? 24 : 20,
+    mass: 0.6,
+  };
   return (
     <section id="certifications" className="section py-16 md:py-24" aria-label="Certifications">
       <div className="container-lg px-4 md:px-6">
@@ -86,29 +113,39 @@ export default function Certifications() {
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true, amount: 0.35 }}
+          transition={{ duration: prefersReducedMotion ? 0.45 : 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="mb-12 md:mb-16"
         >
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white mb-3">
             Certifications
           </h2>
-          <div className="h-1 w-24 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 rounded-full" />
+          <motion.div
+            initial={{ scaleX: 0, opacity: 0.9 }}
+            whileInView={{ scaleX: 1, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="origin-left h-1 w-24 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 rounded-full"
+          />
         </motion.div>
 
         {/* Certificates Grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-7xl mx-auto">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
+          className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-7xl mx-auto"
+        >
           {certificates.map((cert, index) => {
             const Icon = cert.icon;
             return (
               <motion.div
                 key={index}
                 variants={cardVariants}
-                initial="hidden"
-                whileInView="visible"
-                viewport={{ once: true, amount: 0.3 }}
-                whileHover={{ y: -8, scale: 1.02 }}
-                transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                whileHover={{ y: prefersReducedMotion ? 0 : -6, scale: prefersReducedMotion ? 1.005 : 1.015 }}
+                whileTap={{ scale: prefersReducedMotion ? 0.995 : 0.99 }}
+                transition={hoverTransition}
                 className="group relative"
               >
                 <div className="relative rounded-2xl overflow-hidden p-6 backdrop-blur-md border-2 shadow-lg transition-all duration-700 ease-out h-full"
@@ -187,7 +224,7 @@ export default function Certifications() {
               </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   )

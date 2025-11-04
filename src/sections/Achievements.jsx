@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion';
+import { motion, useReducedMotion } from 'framer-motion';
 import { FaCrown, FaTrophy, FaCode, FaUsers, FaRobot, FaMedal } from 'react-icons/fa';
 import { SiAndroid } from 'react-icons/si';
 import { HiSparkles } from 'react-icons/hi2';
@@ -44,41 +44,62 @@ const activitiesData = {
   ]
 };
 
-const cardVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } },
+// Reduced-motion aware variants for natural entrance
+const makeCardVariants = (reduced) => ({
+  hidden: { opacity: 0, y: reduced ? 0 : 22, scale: reduced ? 1 : 0.985 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: reduced ? 0.35 : 0.6, ease: [0.22, 1, 0.36, 1] },
+  },
+});
+
+// Stagger container for the three cards
+const containerVariants = {
+  hidden: {},
+  visible: {
+    transition: { staggerChildren: 0.12, delayChildren: 0.05 },
+  },
 };
 
 export default function Achievements() {
+  const prefersReducedMotion = useReducedMotion();
+  const cardVariants = makeCardVariants(prefersReducedMotion);
   return (
     <section id="achievements" className="section py-16 md:py-24" aria-label="Activities">
       <div className="container-lg px-4 md:px-6">
         {/* Section Title - Matching other sections */}
         <motion.div
-          initial={{ opacity: 0, y: -30 }}
+          initial={{ opacity: 0, y: -24 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
+          viewport={{ once: true, amount: 0.35 }}
+          transition={{ duration: prefersReducedMotion ? 0.45 : 0.7, ease: [0.22, 1, 0.36, 1] }}
           className="mb-12 md:mb-16"
         >
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-white mb-3">
             Activities
           </h2>
-          <div className="h-1 w-24 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 rounded-full" />
+          <motion.div
+            initial={{ scaleX: 0, opacity: 0.9 }}
+            whileInView={{ scaleX: 1, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="origin-left h-1 w-24 bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 rounded-full"
+          />
         </motion.div>
 
         {/* Activities - Three Code Editor Style Cards */}
-        <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto items-stretch">
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.25 }}
+          className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto items-stretch"
+        >
           {/* Card 1: Leadership */}
           <motion.div
-            initial={{ opacity: 0, y: 50, scale: 0.9 }}
-            whileInView={{ opacity: 1, y: 0, scale: 1 }}
-            viewport={{ amount: 0.2 }}
-            transition={{ 
-              duration: 0.7, 
-              ease: [0.22, 1, 0.36, 1],
-              delay: 0.1
-            }}
+            variants={cardVariants}
             className="rounded-lg p-[2px] bg-gradient-to-br from-blue-500/50 via-purple-500/50 to-blue-500/50 shadow-xl backdrop-blur-sm hover:shadow-2xl hover:shadow-blue-500/30 transition-all duration-300 h-full"
           >
             <div className="bg-slate-900 rounded-[7px] overflow-hidden h-full flex flex-col">
@@ -130,10 +151,7 @@ export default function Achievements() {
 
           {/* Card 2: Finalist */}
           <motion.div
-            initial={{ opacity: 0, x: 40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ amount: 0.3 }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
+            variants={cardVariants}
             className="rounded-lg p-[2px] bg-gradient-to-br from-blue-500/50 via-purple-500/50 to-blue-500/50 shadow-xl backdrop-blur-sm hover:shadow-2xl hover:shadow-blue-500/30 transition-all duration-300 h-full"
           >
             <div className="bg-slate-900 rounded-[7px] overflow-hidden h-full flex flex-col">
@@ -185,10 +203,7 @@ export default function Achievements() {
 
           {/* Card 3: Participation */}
           <motion.div
-            initial={{ opacity: 0, x: -40 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ amount: 0.3 }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
+            variants={cardVariants}
             className="rounded-lg p-[2px] bg-gradient-to-br from-blue-500/50 via-purple-500/50 to-blue-500/50 shadow-xl backdrop-blur-sm hover:shadow-2xl hover:shadow-blue-500/30 transition-all duration-300 h-full"
           >
             <div className="bg-slate-900 rounded-[7px] overflow-hidden h-full flex flex-col">
@@ -232,7 +247,7 @@ export default function Achievements() {
               </div>
             </div>
           </motion.div>
-        </div>
+        </motion.div>
       </div>
     </section>
   )
