@@ -119,27 +119,30 @@ export default function Hero() {
           <div className="flex flex-wrap justify-center md:justify-start gap-4 pt-4">
             <motion.a
               href="#contact"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-              className="group relative flex items-center justify-center gap-2 rounded-full font-bold text-slate-200 
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: 'spring', stiffness: 260, damping: 18 }}
+              className="group relative flex items-center justify-center gap-2 rounded-full font-bold text-slate-200
                          text-base px-6 py-3
-                         bg-slate-500/10 
-                         border border-slate-500 
-                         shadow-lg shadow-black/20 
-                         backdrop-blur-sm 
-                         transition-all duration-300 ease-in-out 
-                         hover:text-white hover:border-blue-400 hover:shadow-xl hover:shadow-blue-500/30 
-                         focus:outline-none focus:ring-4 focus:ring-blue-400/50 
+                         bg-gradient-to-r from-slate-800/40 to-slate-700/30
+                         border border-slate-400/40
+                         shadow-lg shadow-black/20
+                         backdrop-blur-sm
+                         transition-all duration-300 ease-out
+                         hover:text-white hover:border-cyan-300/60 hover:shadow-xl hover:shadow-cyan-500/25
+                         focus:outline-none focus:ring-4 focus:ring-cyan-400/40
                          overflow-hidden"
             >
               <FiUserPlus className="w-5 h-5" strokeWidth={2.5} />
               <span>Contact Me</span>
               <span
-                className="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent 
-                           transition-transform duration-500 ease-in-out 
+                className="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/10 to-transparent
+                           transition-transform duration-700 ease-out
                            transform -skew-x-12 group-hover:translate-x-[200%]"
               />
+              {/* subtle glow */}
+              <span className="pointer-events-none absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300
+                              bg-[radial-gradient(circle_at_50%_0%,rgba(34,211,238,0.12),transparent_55%)]" />
             </motion.a>
 
             <motion.a
@@ -147,27 +150,31 @@ export default function Hero() {
               target={isExternalResume ? '_blank' : undefined}
               rel={isExternalResume ? 'noreferrer noopener' : undefined}
               download={isExternalResume ? undefined : 'Mohammad_Alim_Resume.pdf'}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ type: 'spring', stiffness: 400, damping: 15 }}
-              className="group relative flex items-center justify-center gap-2 rounded-full font-bold text-white 
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ type: 'spring', stiffness: 260, damping: 18 }}
+              className="group relative flex items-center justify-center gap-2 rounded-full font-bold text-white
                          text-base px-6 py-3
-                         bg-gradient-to-r from-blue-500/80 to-purple-500/80
-                         border border-transparent 
-                         shadow-lg shadow-black/20 
-                         backdrop-blur-sm 
-                         transition-all duration-300 ease-in-out 
-                         hover:shadow-xl hover:shadow-blue-500/30 
-                         focus:outline-none focus:ring-4 focus:ring-blue-400/50 
+                         bg-[length:200%_200%] bg-[position:0%_50%]
+                         border border-white/10
+                         shadow-lg shadow-black/20
+                         backdrop-blur-sm
+                         transition-all duration-300 ease-out
+                         group-hover:bg-[position:100%_50%] hover:shadow-xl hover:shadow-purple-500/30
+                         focus:outline-none focus:ring-4 focus:ring-blue-400/50
                          overflow-hidden"
+                style={{ backgroundImage: 'linear-gradient(90deg, #3b82f6 0%, #a855f7 100%)' }}
             >
               <FiDownload className="w-5 h-5" strokeWidth={2.5} />
               <span>Get Resume</span>
               <span
-                className="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent 
-                           transition-transform duration-500 ease-in-out 
+                className="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/30 to-transparent
+                           transition-transform duration-700 ease-out
                            transform -skew-x-12 group-hover:translate-x-[200%]"
               />
+              {/* subtle glow */}
+              <span className="pointer-events-none absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300
+                              bg-[radial-gradient(circle_at_50%_0%,rgba(14,165,233,0.2),transparent_55%)]" />
             </motion.a>
           </div>
         </div>

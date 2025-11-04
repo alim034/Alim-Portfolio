@@ -224,62 +224,158 @@ const PageLoader = () => {
           </motion.div>
           )}
 
-          {/* Mobile-specific loader content (distinct design) */}
+          {/* Mobile-specific loader content (attractive & smooth) */}
           {isMobile && (
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
+              initial={{ scale: 0.92, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
-              className="relative z-10 flex flex-col items-center gap-6"
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
+              className="relative z-10 flex flex-col items-center gap-8"
             >
-              {/* Gradient sweep ring with logo */}
-              <div className="relative w-28 h-28">
-                {/* sweep */}
+              {/* Beautiful orbital animation with floating orbs */}
+              <div className="relative w-32 h-32">
+                {/* Central pulsing core with logo */}
                 <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 2.4, repeat: Infinity, ease: "linear" }}
-                  className="absolute inset-0 rounded-full opacity-80"
+                  animate={{ 
+                    scale: [1, 1.2, 1],
+                    opacity: [0.6, 0.9, 0.6]
+                  }}
+                  transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                  className="absolute inset-0 m-auto w-12 h-12 rounded-full"
                   style={{
-                    background:
-                      "conic-gradient(from 0deg, rgba(34,211,238,0.0) 0deg, rgba(34,211,238,0.6) 70deg, rgba(99,102,241,0.6) 200deg, rgba(168,85,247,0.0) 260deg)"
+                    background: 'radial-gradient(circle, rgba(59,130,246,0.8) 0%, rgba(168,85,247,0.4) 70%, transparent 100%)',
+                    filter: 'blur(8px)'
                   }}
                 />
-                {/* inner disc */}
-                <div className="absolute inset-[6px] rounded-full bg-slate-900/70 backdrop-blur-md border border-slate-700/50 shadow-[0_0_40px_rgba(34,211,238,0.2)] flex items-center justify-center">
-                  <img src="/assets/main-logo.svg" alt="Logo" className="w-10 h-10 rounded-lg"/>
+                
+                {/* Logo in center */}
+                <div className="absolute inset-0 m-auto w-10 h-10 flex items-center justify-center">
+                  <img 
+                    src="/assets/main-logo.svg" 
+                    alt="Logo" 
+                    className="w-full h-full object-contain"
+                  />
                 </div>
+                
+                {/* Orbiting particles */}
+                {[0, 1, 2].map((i) => (
+                  <motion.div
+                    key={i}
+                    animate={{
+                      rotate: 360,
+                    }}
+                    transition={{
+                      duration: 3 + i * 0.5,
+                      repeat: Infinity,
+                      ease: "linear",
+                      delay: i * 0.4
+                    }}
+                    className="absolute inset-0"
+                    style={{ transformOrigin: 'center' }}
+                  >
+                    <motion.div
+                      animate={{
+                        scale: [1, 1.3, 1],
+                        opacity: [0.7, 1, 0.7]
+                      }}
+                      transition={{
+                        duration: 2,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                        delay: i * 0.3
+                      }}
+                      className="absolute top-0 left-1/2 w-3 h-3 rounded-full -ml-1.5"
+                      style={{
+                        background: i === 0 
+                          ? 'linear-gradient(135deg, #22d3ee, #3b82f6)'
+                          : i === 1
+                          ? 'linear-gradient(135deg, #3b82f6, #8b5cf6)'
+                          : 'linear-gradient(135deg, #8b5cf6, #a855f7)',
+                        boxShadow: `0 0 20px ${i === 0 ? 'rgba(34,211,238,0.8)' : i === 1 ? 'rgba(59,130,246,0.8)' : 'rgba(168,85,247,0.8)'}`
+                      }}
+                    />
+                  </motion.div>
+                ))}
+
+                {/* Smooth rotating halo */}
+                <motion.div
+                  animate={{ rotate: -360 }}
+                  transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
+                  className="absolute inset-0 rounded-full opacity-40"
+                  style={{
+                    background: 'conic-gradient(from 0deg, transparent 0%, rgba(59,130,246,0.6) 25%, transparent 50%, rgba(168,85,247,0.6) 75%, transparent 100%)',
+                    filter: 'blur(2px)'
+                  }}
+                />
               </div>
 
-              {/* Name + dots */}
-              <div className="flex flex-col items-center gap-2">
+              {/* Elegant name display */}
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, ease: "easeOut", delay: 0.3 }}
+                className="flex flex-col items-center gap-3"
+              >
                 <motion.h2
                   animate={{ backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }}
-                  transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
-                  className="text-2xl font-semibold bg-gradient-to-r from-cyan-400 via-sky-400 to-violet-400 bg-clip-text text-transparent"
+                  transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+                  className="text-3xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 via-violet-400 to-fuchsia-400 bg-clip-text text-transparent tracking-tight"
                   style={{ backgroundSize: '200% 200%' }}
                 >
                   Mohammad Alim
                 </motion.h2>
-                <div className="flex items-center gap-1">
-                  <span className="text-slate-400 text-sm">Loading</span>
-                  {[0,1,2].map((i) => (
-                    <motion.span key={i}
-                      animate={{ opacity: [0.3, 1, 0.3], y: [0, -6, 0] }}
-                      transition={{ duration: 1.4, repeat: Infinity, delay: i * 0.2, ease: 'easeInOut' }}
-                      className="w-1.5 h-1.5 rounded-full bg-gradient-to-r from-cyan-400 to-sky-400"/>
-                  ))}
+                
+                {/* Stylish loading indicator */}
+                <div className="flex items-center gap-2">
+                  <span className="text-slate-300 text-sm font-medium tracking-wide">Loading</span>
+                  <div className="flex gap-1.5">
+                    {[0, 1, 2].map((i) => (
+                      <motion.div
+                        key={i}
+                        animate={{
+                          scale: [1, 1.4, 1],
+                          opacity: [0.4, 1, 0.4],
+                        }}
+                        transition={{
+                          duration: 1.2,
+                          repeat: Infinity,
+                          delay: i * 0.15,
+                          ease: "easeInOut"
+                        }}
+                        className="w-2 h-2 rounded-full"
+                        style={{
+                          background: 'linear-gradient(135deg, #3b82f6, #a855f7)',
+                          boxShadow: '0 0 8px rgba(59,130,246,0.6)'
+                        }}
+                      />
+                    ))}
+                  </div>
                 </div>
-              </div>
+              </motion.div>
 
-              {/* thin progress shimmer */}
-              <div className="w-56 h-1 bg-slate-700/50 rounded-full overflow-hidden">
+              {/* Sleek progress bar */}
+              <motion.div
+                initial={{ opacity: 0, scaleX: 0.8 }}
+                animate={{ opacity: 1, scaleX: 1 }}
+                transition={{ duration: 0.6, ease: "easeOut", delay: 0.5 }}
+                className="relative w-64 h-1.5 bg-slate-800/50 rounded-full overflow-hidden backdrop-blur-sm"
+              >
                 <motion.div
-                  initial={{ x: '-100%' }}
-                  animate={{ x: '100%' }}
-                  transition={{ duration: 2.2, repeat: Infinity, ease: 'easeInOut' }}
-                  className="h-full w-1/3 bg-gradient-to-r from-transparent via-cyan-400 to-transparent"
+                  animate={{
+                    x: ['-100%', '100%']
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                  className="absolute inset-0 w-1/2 rounded-full"
+                  style={{
+                    background: 'linear-gradient(90deg, transparent, rgba(59,130,246,0.8), rgba(168,85,247,0.8), transparent)',
+                    boxShadow: '0 0 15px rgba(59,130,246,0.5)'
+                  }}
                 />
-              </div>
+              </motion.div>
             </motion.div>
           )}
 
