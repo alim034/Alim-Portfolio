@@ -29,9 +29,16 @@ const AboutCodeBlock = () => {
 
   return (
     // Outer div for gradient border (Unchanged)
-    <div className="rounded-lg p-[2px] bg-gradient-to-br from-blue-500/50 via-purple-500/50 to-blue-500/50 shadow-xl backdrop-blur-sm">
-      {/* Inner div for background and content (Unchanged) */}
-      <div className="bg-slate-900 rounded-[7px] overflow-hidden">
+    <div
+      className="rounded-lg p-[2px] 
+      bg-gradient-to-br from-cyan-500/40 via-purple-600/50 to-blue-600/40
+      shadow-[0_0_25px_rgba(56,189,248,0.35)] hover:shadow-[0_0_45px_rgba(147,51,234,0.55)]
+      backdrop-blur-xl transition-all duration-500">
+
+    <div className="rounded-[7px] overflow-hidden 
+      bg-gradient-to-br from-[#0c0f1c]/95 via-[#0b0d18]/98 to-[#05060a]/95 
+      backdrop-blur-xl">
+
         {/* Code Editor Header (Unchanged) */}
         <div className="flex items-center px-2 md:px-4 py-1 md:py-2 bg-slate-800/50 border-b border-slate-700">
           <div className="flex space-x-1 md:space-x-2">
@@ -149,15 +156,24 @@ export default function About() {
           </motion.div>
 
           {/* --- Right Column: Code Block (Unchanged structure) --- */}
+          {/* --- Right Column: Code Block with Card-like Motion --- */}
           <motion.div
             className="w-full mx-auto md:mx-0 md:max-w-2xl lg:max-w-xl"
-            initial={{ opacity: 0, y: 28 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, y: 40, scale: 0.95 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
             viewport={{ once: true, amount: 0.25 }}
-            transition={{ duration: 0.65, ease: [0.25, 0.1, 0.25, 1], delay: 0.08 }}
+            transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
+            whileHover={{
+              scale: 1.03,
+              rotateX: 2,
+              rotateY: -2,
+              transition: { duration: 0.35 },
+            }}
+            whileTap={{ scale: 0.98 }}
           >
             <AboutCodeBlock />
           </motion.div>
+
 
         </div>
       </div>

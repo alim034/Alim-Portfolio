@@ -58,14 +58,14 @@ const educationData = [
 ];
 
 const cardVariants = {
-  hidden: { opacity: 0, y: 40, scale: 0.95 },
+  hidden: { opacity: 0, y: 26, scale: 0.97 },
   visible: { 
     opacity: 1, 
     y: 0, 
     scale: 1,
     transition: { 
-      duration: 0.7, 
-      ease: [0.25, 0.1, 0.25, 1] 
+      duration: 0.6, 
+      ease: [0.22, 1, 0.36, 1] 
     } 
   },
 };
@@ -90,15 +90,15 @@ export default function Education() {
 
         {/* Education Timeline */}
         <div className="relative max-w-5xl mx-auto">
-          {/* Simple Vertical Timeline Line */}
-          <div className="absolute left-[26px] md:left-[30px] top-0 bottom-0 w-[2px] bg-gradient-to-b from-blue-500/40 via-blue-500/60 to-blue-500/40" />
+          {/* Glow Vertical Timeline Line */}
+          <div className="absolute left-[26px] md:left-[30px] top-0 bottom-0 w-[2px] bg-gradient-to-b from-cyan-400/70 via-blue-500/70 to-purple-500/60 shadow-[0_0_18px_rgba(56,189,248,0.35)]" />
 
           <motion.div 
             className="space-y-5 md:space-y-6 pl-14 md:pl-16"
             initial="hidden"
             whileInView="visible"
-            viewport={{ once: false, amount: 0.15 }}
-            transition={{ staggerChildren: 0.15 }}
+            viewport={{ once: false, amount: 0.2, margin: '-8% 0px -8% 0px' }}
+            transition={{ staggerChildren: 0.14 }}
           >
             {educationData.map((edu, index) => {
               const Icon = edu.icon;
@@ -113,17 +113,19 @@ export default function Education() {
                   }}
                   className="relative"
                 >
-                  <div className="group relative rounded-xl overflow-hidden p-4 md:p-6 backdrop-blur-md border-2 shadow-xl transition-all duration-500"
-                       style={{ 
-                         background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.85) 100%)',
-                         borderColor: 'rgba(56, 189, 248, 0.3)',
-                         boxShadow: '0 10px 40px rgba(0, 0, 0, 0.3)',
-                       }}>
+                  <div
+                    className="group relative rounded-xl overflow-hidden p-4 md:p-6 backdrop-blur-md border-2 shadow-xl transition-all duration-600 ease-out"
+                    style={{ 
+                      background: 'linear-gradient(135deg, rgba(12, 18, 34, 0.92) 0%, rgba(16, 23, 41, 0.9) 50%, rgba(10, 14, 26, 0.94) 100%)',
+                      borderColor: 'rgba(56, 189, 248, 0.35)',
+                      boxShadow: '0 10px 40px rgba(0, 0, 0, 0.35), 0 0 22px rgba(56, 189, 248, 0.18)',
+                    }}
+                  >
                     
                     {/* Hover Gradient Overlay */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-500 pointer-events-none"
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-600 pointer-events-none"
                          style={{
-                           background: 'radial-gradient(circle at 50% 0%, rgba(6, 182, 212, 0.15), transparent 70%)'
+                           background: 'radial-gradient(circle at 50% 0%, rgba(6, 182, 212, 0.18), transparent 70%)'
                          }} />
 
                     <div className="relative flex flex-col sm:flex-row gap-3 sm:gap-5">
@@ -132,15 +134,15 @@ export default function Education() {
                         {/* Simple Circular Dot */}
                         <div className="absolute -left-[55px] md:-left-[59px] top-[26px] md:top-[30px] z-20">
                           {/* Outer ring */}
-                          <div className="w-5 h-5 md:w-6 md:h-6 rounded-full border-[3px] border-blue-500 bg-slate-900 flex items-center justify-center">
+                          <div className="w-5 h-5 md:w-6 md:h-6 rounded-full border-[3px] border-cyan-400 bg-slate-900 flex items-center justify-center shadow-[0_0_12px_rgba(56,189,248,0.5)]">
                             {/* Inner filled circle */}
                             <div className="w-2 h-2 md:w-2.5 md:h-2.5 rounded-full bg-blue-500" />
                           </div>
                         </div>
                         
                         {/* Icon container */}
-                        <div className="relative w-14 h-14 md:w-16 md:h-16 rounded-xl bg-gradient-to-br from-cyan-500/20 via-blue-500/20 to-purple-500/20 border-2 border-cyan-400/30 flex items-center justify-center group-hover:scale-105 group-hover:border-cyan-300/50 transition-all duration-500"
-                             style={{ boxShadow: '0 4px 20px rgba(0, 0, 0, 0.2)' }}>
+                        <div className="relative w-14 h-14 md:w-16 md:h-16 rounded-xl bg-gradient-to-br from-cyan-500/25 via-blue-500/20 to-purple-500/25 border-2 border-cyan-400/40 flex items-center justify-center group-hover:scale-105 group-hover:border-cyan-300/60 transition-all duration-600"
+                             style={{ boxShadow: '0 4px 20px rgba(0, 0, 0, 0.25), 0 0 14px rgba(56, 189, 248, 0.28)' }}>
                           <Icon className="w-7 h-7 md:w-8 md:h-8 text-cyan-300 group-hover:text-cyan-100 transition-colors duration-500" />
                         </div>
                       </div>
@@ -178,8 +180,8 @@ export default function Education() {
                         {/* Highlights/Courses Section */}
                         {edu.highlights && (
                           <div className="relative group/highlights">
-                            <div className="p-4 rounded-lg bg-gradient-to-br from-cyan-500/5 via-blue-500/10 to-purple-500/5 border border-cyan-400/20 backdrop-blur-sm group-hover/highlights:border-cyan-300/40 transition-all duration-500"
-                                 style={{ boxShadow: '0 4px 15px rgba(0, 0, 0, 0.2)' }}>
+                            <div className="p-4 rounded-lg bg-gradient-to-br from-cyan-500/8 via-blue-500/12 to-purple-500/8 border border-cyan-400/25 backdrop-blur-sm group-hover/highlights:border-cyan-300/45 transition-all duration-600"
+                                   style={{ boxShadow: '0 4px 15px rgba(0, 0, 0, 0.22), 0 0 12px rgba(56, 189, 248, 0.2)' }}>
                               {/* Header with Icon */}
                               <div className="flex items-center gap-2 mb-3 pb-2 border-b border-cyan-400/20">
                                 {edu.highlightIcon && (
@@ -198,7 +200,7 @@ export default function Education() {
                                   <li key={idx} className="flex items-start gap-2.5 group/item">
                                     <div className="relative flex-shrink-0 mt-1.5">
                                       <div className="w-1.5 h-1.5 rounded-full bg-gradient-to-br from-cyan-300 to-blue-400"
-                                           style={{ boxShadow: '0 0 6px rgba(34, 211, 238, 0.5)' }} />
+                                             style={{ boxShadow: '0 0 8px rgba(34, 211, 238, 0.55)' }} />
                                     </div>
                                     <span className="text-slate-300 text-xs md:text-sm leading-relaxed">
                                       {highlight}
@@ -213,9 +215,9 @@ export default function Education() {
                     </div>
 
                     {/* Decorative Glow Effect */}
-                    <div className="absolute -inset-[2px] rounded-xl opacity-0 group-hover:opacity-100 blur-xl transition-all duration-500 pointer-events-none -z-10"
+                    <div className="absolute -inset-[3px] rounded-xl opacity-0 group-hover:opacity-100 blur-xl transition-all duration-700 pointer-events-none -z-10"
                          style={{
-                           background: 'linear-gradient(135deg, rgba(34, 211, 238, 0.3), rgba(59, 130, 246, 0.3), rgba(168, 85, 247, 0.2))'
+                           background: 'linear-gradient(135deg, rgba(34, 211, 238, 0.32), rgba(59, 130, 246, 0.3), rgba(168, 85, 247, 0.24))'
                          }} />
                   </div>
                 </motion.div>

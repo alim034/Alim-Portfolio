@@ -31,11 +31,11 @@ export default function Hero() {
           {/* --- Name and Heading --- */}
           <h1 className="leading-tight">
             <span className="block text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium tracking-wider 
-                           bg-gradient-to-r from-slate-200/80 to-white/90 bg-clip-text text-transparent drop-shadow-[0_0_8px_rgba(148,163,184,0.15)]">
+                           bg-gradient-to-r from-cyan-200 via-blue-200 to-purple-300 bg-clip-text text-transparent drop-shadow-[0_0_12px_rgba(56,189,248,0.3)]">
               Hello, I'm
             </span>
             <span className="block mt-2 md:mt-3 text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold font-serif tracking-tight 
-                           bg-gradient-to-r from-white via-blue-50 to-white bg-clip-text text-transparent">
+                           bg-gradient-to-r from-cyan-100 via-blue-100 to-purple-200 bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(56,189,248,0.4)]">
               Mohammad Alim
             </span>
           </h1>
@@ -82,8 +82,8 @@ export default function Hero() {
                 className="absolute inset-0 flex items-center justify-center md:justify-start"
               >
                 <p className="text-3xl md:text-4xl font-semibold leading-tight tracking-tight 
-                             bg-gradient-to-r from-cyan-200 via-sky-300 to-fuchsia-400 bg-clip-text text-transparent 
-                             drop-shadow-[0_0_16px_rgba(56,189,248,0.25)]">
+                             bg-gradient-to-r from-cyan-300 via-sky-400 to-purple-400 bg-clip-text text-transparent 
+                             drop-shadow-[0_0_20px_rgba(56,189,248,0.35)]">
                   {roles[idx]}
                 </p>
               </motion.div>
@@ -163,7 +163,7 @@ export default function Hero() {
                          group-hover:bg-[position:100%_50%] hover:shadow-xl hover:shadow-purple-500/30
                          focus:outline-none focus:ring-4 focus:ring-blue-400/50
                          overflow-hidden"
-                style={{ backgroundImage: 'linear-gradient(90deg, #3b82f6 0%, #a855f7 100%)' }}
+                style={{ backgroundImage: 'linear-gradient(90deg, #06b6d4 0%, #8b5cf6 50%, #ec4899 100%)' }}
             >
               <FiDownload className="w-5 h-5" strokeWidth={2.5} />
               <span>Get Resume</span>

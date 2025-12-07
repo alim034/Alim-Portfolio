@@ -44,28 +44,20 @@ const activitiesData = {
   ]
 };
 
-// Reduced-motion aware variants for natural entrance
-const makeCardVariants = (reduced) => ({
-  hidden: { opacity: 0, y: reduced ? 0 : 22, scale: reduced ? 1 : 0.985 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: { duration: reduced ? 0.35 : 0.6, ease: [0.22, 1, 0.36, 1] },
+// Match Projects section easing and timing
+const cardMotion = (idx, reduced) => ({
+  initial: { opacity: 0, y: reduced ? 0 : 30 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { amount: 0.2, once: false },
+  transition: {
+    duration: reduced ? 0.45 : 0.7,
+    ease: [0.25, 0.1, 0.25, 1],
+    delay: reduced ? 0 : idx * 0.15,
   },
 });
 
-// Stagger container for the three cards
-const containerVariants = {
-  hidden: {},
-  visible: {
-    transition: { staggerChildren: 0.12, delayChildren: 0.05 },
-  },
-};
-
 export default function Achievements() {
   const prefersReducedMotion = useReducedMotion();
-  const cardVariants = makeCardVariants(prefersReducedMotion);
   return (
     <section id="achievements" className="section py-16 md:py-24" aria-label="Activities">
       <div className="container-lg px-4 md:px-6">
@@ -90,19 +82,13 @@ export default function Achievements() {
         </motion.div>
 
         {/* Activities - Three Code Editor Style Cards */}
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.25 }}
-          className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto items-stretch"
-        >
+        <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto items-stretch">
           {/* Card 1: Leadership */}
           <motion.div
-            variants={cardVariants}
-            className="rounded-lg p-[2px] bg-gradient-to-br from-blue-500/50 via-purple-500/50 to-blue-500/50 shadow-xl backdrop-blur-sm hover:shadow-2xl hover:shadow-blue-500/30 transition-all duration-300 h-full"
+            {...cardMotion(0, prefersReducedMotion)}
+            className="group rounded-lg p-[2px] bg-gradient-to-br from-cyan-500/40 via-purple-600/50 to-blue-600/40 shadow-[0_0_25px_rgba(56,189,248,0.35)] hover:shadow-[0_0_45px_rgba(147,51,234,0.55)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 active:scale-[0.99] h-full"
           >
-            <div className="bg-slate-900 rounded-[7px] overflow-hidden h-full flex flex-col">
+            <div className="bg-gradient-to-br from-[#0c0f1c]/95 via-[#0b0d18]/98 to-[#05060a]/95 rounded-[7px] overflow-hidden h-full flex flex-col backdrop-blur-xl border border-cyan-500/20 group-hover:border-purple-400/30 transition-colors duration-500">
               {/* Code Editor Header */}
               <div className="flex items-center justify-between px-4 py-2.5 bg-slate-800/50 border-b border-slate-700">
                 <div className="flex items-center gap-3">
@@ -151,10 +137,10 @@ export default function Achievements() {
 
           {/* Card 2: Finalist */}
           <motion.div
-            variants={cardVariants}
-            className="rounded-lg p-[2px] bg-gradient-to-br from-blue-500/50 via-purple-500/50 to-blue-500/50 shadow-xl backdrop-blur-sm hover:shadow-2xl hover:shadow-blue-500/30 transition-all duration-300 h-full"
+            {...cardMotion(1, prefersReducedMotion)}
+            className="group rounded-lg p-[2px] bg-gradient-to-br from-cyan-500/40 via-purple-600/50 to-blue-600/40 shadow-[0_0_25px_rgba(56,189,248,0.35)] hover:shadow-[0_0_45px_rgba(147,51,234,0.55)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 active:scale-[0.99] h-full"
           >
-            <div className="bg-slate-900 rounded-[7px] overflow-hidden h-full flex flex-col">
+            <div className="bg-gradient-to-br from-[#0c0f1c]/95 via-[#0b0d18]/98 to-[#05060a]/95 rounded-[7px] overflow-hidden h-full flex flex-col backdrop-blur-xl border border-cyan-500/20 group-hover:border-purple-400/30 transition-colors duration-500">
               {/* Code Editor Header */}
               <div className="flex items-center justify-between px-4 py-2.5 bg-slate-800/50 border-b border-slate-700">
                 <div className="flex items-center gap-3">
@@ -203,10 +189,10 @@ export default function Achievements() {
 
           {/* Card 3: Participation */}
           <motion.div
-            variants={cardVariants}
-            className="rounded-lg p-[2px] bg-gradient-to-br from-blue-500/50 via-purple-500/50 to-blue-500/50 shadow-xl backdrop-blur-sm hover:shadow-2xl hover:shadow-blue-500/30 transition-all duration-300 h-full"
+            {...cardMotion(2, prefersReducedMotion)}
+            className="group rounded-lg p-[2px] bg-gradient-to-br from-cyan-500/40 via-purple-600/50 to-blue-600/40 shadow-[0_0_25px_rgba(56,189,248,0.35)] hover:shadow-[0_0_45px_rgba(147,51,234,0.55)] backdrop-blur-xl transition-all duration-500 hover:-translate-y-1 active:scale-[0.99] h-full"
           >
-            <div className="bg-slate-900 rounded-[7px] overflow-hidden h-full flex flex-col">
+            <div className="bg-gradient-to-br from-[#0c0f1c]/95 via-[#0b0d18]/98 to-[#05060a]/95 rounded-[7px] overflow-hidden h-full flex flex-col backdrop-blur-xl border border-cyan-500/20 group-hover:border-purple-400/30 transition-colors duration-500">
               {/* Code Editor Header */}
               <div className="flex items-center justify-between px-4 py-2.5 bg-slate-800/50 border-b border-slate-700">
                 <div className="flex items-center gap-3">
@@ -247,7 +233,7 @@ export default function Achievements() {
               </div>
             </div>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
     </section>
   )

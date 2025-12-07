@@ -35,7 +35,7 @@ export function Layout({ children }) {
                   target="_blank"
                   rel="noreferrer noopener"
                   aria-label="LinkedIn"
-                  className="text-slate-300 hover:text-blue-400 transition-colors"
+                  className="text-gray-600 dark:text-slate-300 hover:text-blue-400 dark:hover:text-blue-400 transition-colors"
                 >
                   <FaLinkedin size={20} />
                 </a>
@@ -44,7 +44,7 @@ export function Layout({ children }) {
                   target="_blank"
                   rel="noreferrer noopener"
                   aria-label="GitHub"
-                  className="text-slate-300 hover:text-white transition-colors"
+                  className="text-gray-600 dark:text-slate-300 hover:text-gray-900 dark:hover:text-white transition-colors"
                 >
                   <FaGithub size={20} />
                 </a>
@@ -53,7 +53,7 @@ export function Layout({ children }) {
                   target="_blank"
                   rel="noreferrer noopener"
                   aria-label="Instagram"
-                  className="text-slate-300 hover:text-pink-400 transition-colors"
+                  className="text-gray-600 dark:text-slate-300 hover:text-pink-400 dark:hover:text-pink-400 transition-colors"
                 >
                   <FaInstagram size={20} />
                 </a>

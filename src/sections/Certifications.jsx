@@ -75,12 +75,12 @@ const certificates = [
 
 // Build card variants with reduced-motion awareness for smoother, natural entrance
 const makeCardVariants = (reduced) => ({
-  hidden: { opacity: 0, y: reduced ? 0 : 22 },
+  hidden: { opacity: 0, y: reduced ? 0 : 18 },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: reduced ? 0.35 : 0.55,
+      duration: reduced ? 0.4 : 0.6,
       ease: [0.22, 1, 0.36, 1], // smooth outCubic-like
     },
   },
@@ -102,9 +102,9 @@ export default function Certifications() {
   const cardVariants = makeCardVariants(prefersReducedMotion);
   const hoverTransition = {
     type: 'spring',
-    stiffness: prefersReducedMotion ? 200 : 230,
-    damping: prefersReducedMotion ? 24 : 20,
-    mass: 0.6,
+    stiffness: prefersReducedMotion ? 190 : 180,
+    damping: prefersReducedMotion ? 26 : 22,
+    mass: 0.7,
   };
   return (
     <section id="certifications" className="section py-16 md:py-24" aria-label="Certifications">
@@ -134,7 +134,7 @@ export default function Certifications() {
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: false, amount: 0.25, margin: '-10% 0px -5% 0px' }}
           className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-7xl mx-auto"
         >
           {certificates.map((cert, index) => {
@@ -143,20 +143,21 @@ export default function Certifications() {
               <motion.div
                 key={index}
                 variants={cardVariants}
-                whileHover={{ y: prefersReducedMotion ? 0 : -6, scale: prefersReducedMotion ? 1.005 : 1.015 }}
-                whileTap={{ scale: prefersReducedMotion ? 0.995 : 0.99 }}
+                whileHover={{ y: prefersReducedMotion ? 0 : -4, scale: prefersReducedMotion ? 1.005 : 1.02, rotate: prefersReducedMotion ? 0 : 0.2 }}
+                whileTap={{ scale: prefersReducedMotion ? 0.995 : 0.992 }}
                 transition={hoverTransition}
                 className="group relative"
               >
-                <div className="relative rounded-2xl overflow-hidden p-6 backdrop-blur-md border-2 shadow-lg transition-all duration-700 ease-out h-full"
-                     style={{ 
-                       background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.8) 100%)',
-                       borderColor: 'rgba(56, 189, 248, 0.3)',
-                       boxShadow: '0 10px 30px rgba(0, 0, 0, 0.3)',
-                     }}>
+                <div
+                  style={{ 
+                    background: 'linear-gradient(145deg, rgba(10, 12, 26, 0.96) 0%, rgba(13, 18, 34, 0.94) 50%, rgba(9, 12, 24, 0.96) 100%)',
+                    boxShadow: '0 12px 45px rgba(0, 0, 0, 0.55), 0 0 18px rgba(56, 189, 248, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.05)',
+                  }}
+                  className={`relative rounded-2xl overflow-hidden p-6 backdrop-blur-xl border-2 shadow-2xl transition-all duration-700 ease-out h-full ${cert.borderColor} group-hover:border-cyan-300/80 group-hover:shadow-[0_18px_60px_rgba(56,189,248,0.35)]`}
+                >
                   
                   {/* Hover Gradient Overlay */}
-                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-700 ease-out pointer-events-none"
+                  <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-all duration-850 ease-[cubic-bezier(0.24,0.11,0.26,1)] pointer-events-none"
                        style={{
                          background: 'radial-gradient(circle at 50% 0%, rgba(6, 182, 212, 0.15), transparent 70%)'
                        }} />
@@ -216,9 +217,13 @@ export default function Certifications() {
                   </div>
 
                   {/* Decorative Glow Effect */}
-                  <div className="absolute -inset-[2px] rounded-2xl opacity-0 group-hover:opacity-100 blur-2xl transition-all duration-700 pointer-events-none -z-10"
+                  <div className="absolute -inset-[2px] rounded-2xl opacity-0 group-hover:opacity-100 blur-2xl transition-all duration-720 pointer-events-none -z-10"
                        style={{
                          background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.4), rgba(59, 130, 246, 0.4), rgba(147, 51, 234, 0.3))'
+                       }} />
+                  <div className="absolute -inset-1 rounded-2xl opacity-0 group-hover:opacity-55 blur-3xl transition-all duration-1050 pointer-events-none -z-20"
+                       style={{
+                         background: 'radial-gradient(circle, rgba(6, 182, 212, 0.25) 0%, rgba(59, 130, 246, 0.22) 52%, rgba(147, 51, 234, 0.18) 72%, transparent 100%)'
                        }} />
                 </div>
               </motion.div>

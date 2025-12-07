@@ -100,37 +100,34 @@ export default function Contact() {
       const fromEmail = formData.get('from_email') || ''
       const message = formData.get('message') || ''
       
-      // If EmailJS not configured, fall back to mailto
+      // If EmailJS not configured, surface an error so the user knows to retry
       if (!serviceId || !templateId || !publicKey) {
-        const subject = encodeURIComponent(`New portfolio message from ${fromName}`)
-        const body = encodeURIComponent(`From: ${fromName}${fromEmail ? ` <${fromEmail}>` : ''}\n\n${message}`)
-        window.location.href = `mailto:${toEmail}?subject=${subject}&body=${body}`
-        setStatus('sent')
-        formRef.current.reset()
+        console.error('EmailJS config missing: set VITE_EMAILJS_SERVICE_ID, VITE_EMAILJS_TEMPLATE_ID, VITE_EMAILJS_PUBLIC_KEY')
+        setStatus('error')
+        setTimeout(() => setStatus('idle'), 5000)
         return
       }
       
-      // Use EmailJS if env is available
-      await emailjs.sendForm(serviceId, templateId, formRef.current, publicKey)
+      // Use EmailJS with explicit params (avoids mailto/Outlook and gives clearer errors)
+      await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          from_name: fromName,
+          from_email: fromEmail,
+          message,
+          to_email: toEmail,
+          to_name: 'Alim',
+        },
+        publicKey
+      )
 
       setStatus('sent')
       formRef.current.reset()
       setTimeout(() => setStatus('idle'), 5000)
     } catch (err) {
-      console.error('EmailJS Error:', err)
-      // As a resilient fallback, still try mailto so the user can reach you
-      try {
-        const formData = new FormData(formRef.current)
-        const fromName = formData.get('from_name') || 'Anonymous'
-        const fromEmail = formData.get('from_email') || ''
-        const message = formData.get('message') || ''
-        const subject = encodeURIComponent(`New portfolio message from ${fromName}`)
-        const body = encodeURIComponent(`From: ${fromName}${fromEmail ? ` <${fromEmail}>` : ''}\n\n${message}`)
-        window.location.href = `mailto:${toEmail}?subject=${subject}&body=${body}`
-        setStatus('sent')
-      } catch (_) {
-        setStatus('error')
-      }
+      console.error('EmailJS Error:', err?.text || err?.message || err)
+      setStatus('error')
       setTimeout(() => setStatus('idle'), 5000)
     }
   }
@@ -181,7 +178,7 @@ export default function Contact() {
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.5 }}
+          viewport={{ once: false, amount: 0.5 }}
           transition={{ duration: 0.6 }}
           className="mb-12 md:mb-16"
         >
@@ -198,13 +195,13 @@ export default function Contact() {
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
+            viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
             className="space-y-8"
           >
             {/* Contact Info Card */}
-            <div className="rounded-lg p-[2px] bg-gradient-to-br from-cyan-500/50 via-blue-500/50 to-purple-500/50 shadow-xl">
-              <div className="bg-slate-900/95 rounded-[7px] p-6 md:p-8 space-y-6">
+            <div className="group rounded-lg p-[2px] bg-gradient-to-br from-cyan-500/40 via-purple-600/50 to-blue-600/40 shadow-[0_0_25px_rgba(56,189,248,0.35)] hover:shadow-[0_0_45px_rgba(147,51,234,0.55)] backdrop-blur-xl transition-all duration-500">
+              <div className="bg-gradient-to-br from-[#0c0f1c]/95 via-[#0b0d18]/98 to-[#05060a]/95 rounded-[7px] p-6 md:p-8 space-y-6 backdrop-blur-xl border border-cyan-500/20 group-hover:border-purple-400/30 transition-colors duration-500">
                 <div>
                   <h3 className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-400 mb-3">
                     Let's Connect
@@ -245,11 +242,11 @@ export default function Contact() {
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, amount: 0.3 }}
+            viewport={{ once: false, amount: 0.3 }}
             transition={{ duration: 0.7, ease: "easeOut" }}
-            className="rounded-lg p-[2px] bg-gradient-to-br from-blue-500/50 via-purple-500/50 to-cyan-500/50 shadow-xl"
+            className="group rounded-lg p-[2px] bg-gradient-to-br from-cyan-500/40 via-purple-600/50 to-blue-600/40 shadow-[0_0_25px_rgba(56,189,248,0.35)] hover:shadow-[0_0_45px_rgba(147,51,234,0.55)] backdrop-blur-xl transition-all duration-500"
           >
-            <div className="bg-slate-900/95 rounded-[7px] p-6 md:p-8">
+            <div className="bg-gradient-to-br from-[#0c0f1c]/95 via-[#0b0d18]/98 to-[#05060a]/95 rounded-[7px] p-6 md:p-8 backdrop-blur-xl border border-cyan-500/20 group-hover:border-purple-400/30 transition-colors duration-500">
               <div className="mb-6">
                 <h3 className="text-xl md:text-2xl font-bold text-white">Send a Message</h3>
                 <p className="text-sm text-slate-400 mt-2">Fill out the form below and I'll get back to you as soon as possible.</p>

@@ -29,9 +29,15 @@ export default function Projects() {
               }}
             >
               {/* Code Editor Style Card */}
-              <div className="rounded-lg p-[2px] bg-gradient-to-br from-blue-500/50 via-purple-500/50 to-blue-500/50 shadow-xl backdrop-blur-sm
-                            hover:shadow-2xl hover:shadow-blue-500/30 transition-all duration-300">
-                <div className="bg-slate-900 rounded-[7px] overflow-hidden">
+              <div
+  className="rounded-lg p-[2px] 
+  bg-gradient-to-br from-cyan-500/40 via-purple-600/50 to-blue-600/40
+  shadow-[0_0_25px_rgba(56,189,248,0.35)] hover:shadow-[0_0_45px_rgba(147,51,234,0.55)]
+  backdrop-blur-xl transition-all duration-500">
+
+  <div className="rounded-[7px] overflow-hidden 
+    bg-gradient-to-br from-[#0c0f1c]/95 via-[#0b0d18]/98 to-[#05060a]/95 
+    backdrop-blur-xl">
                   {/* Code Editor Header */}
                   <div className="flex items-center justify-between px-4 py-2.5 bg-slate-800/50 border-b border-slate-700">
                     <div className="flex items-center gap-3">
@@ -45,7 +51,7 @@ export default function Projects() {
                   </div>
 
                   {/* Code Content */}
-                  <div className="p-6 space-y-5">
+                  <div className="p-6 space-y-5 relative z-10">
                     {/* Project Title */}
                     <h3 className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-400">
                       {p.title}

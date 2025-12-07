@@ -1,416 +1,217 @@
-import { motion, AnimatePresence, useReducedMotion } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
 
 const PageLoader = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [isMobile, setIsMobile] = useState(false);
-  const prefersReducedMotion = useReducedMotion();
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
-    // Simulate loading time
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 2800);
-
-    // Track mobile viewport to tone down animations for small screens
-    const mq = window.matchMedia('(max-width: 640px)');
-    const update = () => setIsMobile(mq.matches);
-    update();
-    mq.addEventListener?.('change', update);
-
-    return () => {
-      clearTimeout(timer);
-      mq.removeEventListener?.('change', update);
-    };
+    const timeout = setTimeout(() => setVisible(false), 2200);
+    return () => clearTimeout(timeout);
   }, []);
 
-  // Safer window dimensions for particles
-  const viewportW = typeof window !== 'undefined' ? window.innerWidth : 360;
-  const viewportH = typeof window !== 'undefined' ? window.innerHeight : 640;
-
-  // Reduce effects on mobile or when user prefers reduced motion
-  const lightMode = isMobile || prefersReducedMotion;
-  const particleCount = lightMode ? 8 : 20;
+  if (!visible) return null;
 
   return (
-    <AnimatePresence mode="wait">
-      {isLoading && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          transition={{ 
-            opacity: { duration: 0.4, ease: "easeOut" },
-            scale: { duration: 0.5, ease: "easeInOut" }
-          }}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-gradient-to-br from-slate-900 via-slate-900 to-slate-900 overflow-hidden"
-        >
-          {/* Background for overlay (mobile gets lighter, desktop richer) */}
-          <div className="absolute inset-0 overflow-hidden">
-            {isMobile ? (
-              <>
-                <motion.div
-                  animate={{ scale: [1, 1.05, 1], opacity: [0.3, 0.45, 0.3] }}
-                  transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-cyan-500/10 via-sky-500/5 to-violet-500/10 blur-2xl"
-                />
-                <motion.div
-                  animate={{ scale: [1.05, 1, 1.05], opacity: [0.25, 0.4, 0.25] }}
-                  transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 0.4 }}
-                  className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-to-tl from-violet-500/10 via-fuchsia-500/5 to-cyan-500/10 blur-2xl"
-                />
-              </>
-            ) : (
-              <>
-                <motion.div
-                  animate={{
-                    scale: [1, 1.2, 1],
-                    rotate: [0, 90, 0],
-                  }}
-                  transition={{
-                    duration: 8,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                  className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-to-br from-cyan-500/15 md:from-cyan-500/20 via-sky-500/8 md:via-sky-500/10 to-violet-500/15 md:to-violet-500/20 blur-3xl transform-gpu"
-                  style={{ willChange: 'transform' }}
-                />
-                <motion.div
-                  animate={{
-                    scale: [1.2, 1, 1.2],
-                    rotate: [90, 0, 90],
-                  }}
-                  transition={{
-                    duration: 8,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                  className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-to-tl from-violet-500/15 md:from-violet-500/20 via-fuchsia-500/8 md:via-fuchsia-500/10 to-cyan-500/15 md:to-cyan-500/20 blur-3xl transform-gpu"
-                  style={{ willChange: 'transform' }}
-                />
-              </>
-            )}
+    <StyledWrapper className="fixed inset-0 z-[100] flex items-center justify-center">
+      <div className="relative flex flex-col items-center gap-8">
+        <div className="loader">
+          <span><span /><span /><span /><span /></span>
+          <div className="base">
+            <span />
+            <div className="face" />
           </div>
-
-          {/* Main loader content */}
-          {!isMobile && (
-          <motion.div 
-            initial={{ scale: 0.8, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ duration: 0.5, ease: "easeOut", delay: 0.2 }}
-            className="relative z-10 flex flex-col items-center gap-8"
-          >
-            {/* Animated rings */}
-            <div className="relative w-28 h-28 md:w-32 md:h-32">
-              {/* Outer ring */}
-              <motion.div
-                animate={{
-                  rotate: 360,
-                  scale: [1, 1.1, 1],
-                }}
-                transition={{
-                  rotate: { duration: lightMode ? 4 : 3, repeat: Infinity, ease: "linear" },
-                  scale: { duration: lightMode ? 3 : 2, repeat: Infinity, ease: "easeInOut" }
-                }}
-                className="absolute inset-0 rounded-full border-3 md:border-4 border-transparent border-t-cyan-400 border-r-sky-400 will-change-transform transform-gpu"
-              />
-              
-              {/* Middle ring */}
-              <motion.div
-                animate={{
-                  rotate: -360,
-                  scale: [1, 0.9, 1],
-                }}
-                transition={{
-                  rotate: { duration: lightMode ? 3.2 : 2.5, repeat: Infinity, ease: "linear" },
-                  scale: { duration: lightMode ? 3 : 2, repeat: Infinity, ease: "easeInOut", delay: 0.3 }
-                }}
-                className="absolute inset-2 rounded-full border-3 md:border-4 border-transparent border-b-violet-400 border-l-fuchsia-400 will-change-transform transform-gpu"
-              />
-              
-              {/* Inner ring */}
-              <motion.div
-                animate={{
-                  rotate: 360,
-                  scale: [1, 1.15, 1],
-                }}
-                transition={{
-                  rotate: { duration: lightMode ? 2.8 : 2, repeat: Infinity, ease: "linear" },
-                  scale: { duration: lightMode ? 3 : 2, repeat: Infinity, ease: "easeInOut", delay: 0.6 }
-                }}
-                className="absolute inset-4 rounded-full border-3 md:border-4 border-transparent border-t-sky-400 border-r-cyan-400 will-change-transform transform-gpu"
-              />
-
-              {/* Center glow */}
-              <motion.div
-                animate={{
-                  scale: [1, 1.25, 1],
-                  opacity: [0.5, 0.8, 0.5],
-                }}
-                transition={{
-                  duration: lightMode ? 2.8 : 2,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }}
-                className="absolute inset-0 m-auto w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-cyan-400 via-sky-400 to-violet-400 blur-lg md:blur-xl"
-              />
-            </div>
-
-            {/* Loading text */}
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.6, ease: "easeOut" }}
-              className="flex flex-col items-center gap-3"
-            >
-              <motion.h2
-                animate={{
-                  backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'],
-                }}
-                transition={{
-                  duration: 3,
-                  repeat: Infinity,
-                  ease: "linear"
-                }}
-                className="text-2xl md:text-4xl font-bold bg-gradient-to-r from-cyan-400 via-sky-400 via-violet-400 to-fuchsia-400 bg-clip-text text-transparent"
-                style={{ backgroundSize: '200% 200%' }}
-              >
-                Mohammad Alim
-              </motion.h2>
-              
-              {/* Animated dots */}
-              <div className="flex items-center gap-2">
-                <span className="text-slate-400 font-medium">Loading</span>
-                <div className="flex gap-1">
-                  {[0, 1, 2].map((i) => (
-                    <motion.span
-                      key={i}
-                      animate={{
-                        opacity: [0.3, 1, 0.3],
-                        y: [0, -8, 0],
-                      }}
-                      transition={{
-                        duration: 1.5,
-                        repeat: Infinity,
-                        delay: i * 0.2,
-                        ease: "easeInOut"
-                      }}
-                      className="w-2 h-2 rounded-full bg-gradient-to-r from-cyan-400 to-sky-400"
-                    />
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Progress bar */}
-            <motion.div
-              initial={{ opacity: 0, scaleX: 0 }}
-              animate={{ opacity: 1, scaleX: 1 }}
-              transition={{ delay: 0.6, duration: 0.5, ease: "easeOut" }}
-              className="w-64 h-1 bg-slate-700/50 rounded-full overflow-hidden"
-            >
-              <motion.div
-                initial={{ x: '-100%' }}
-                animate={{ x: '100%' }}
-                transition={{
-                  duration: lightMode ? 2.6 : 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: 0.3
-                }}
-                className="h-full w-1/3 bg-gradient-to-r from-transparent via-cyan-400 to-transparent"
-              />
-            </motion.div>
-          </motion.div>
-          )}
-
-          {/* Mobile-specific loader content (attractive & smooth) */}
-          {isMobile && (
-            <motion.div
-              initial={{ scale: 0.92, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-              className="relative z-10 flex flex-col items-center gap-8"
-            >
-              {/* Beautiful orbital animation with floating orbs */}
-              <div className="relative w-32 h-32">
-                {/* Central pulsing core with logo */}
-                <motion.div
-                  animate={{ 
-                    scale: [1, 1.2, 1],
-                    opacity: [0.6, 0.9, 0.6]
-                  }}
-                  transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute inset-0 m-auto w-12 h-12 rounded-full"
-                  style={{
-                    background: 'radial-gradient(circle, rgba(59,130,246,0.8) 0%, rgba(168,85,247,0.4) 70%, transparent 100%)',
-                    filter: 'blur(8px)'
-                  }}
-                />
-                
-                {/* Logo in center */}
-                <div className="absolute inset-0 m-auto w-10 h-10 flex items-center justify-center">
-                  <img 
-                    src="/assets/main-logo.svg" 
-                    alt="Logo" 
-                    className="w-full h-full object-contain"
-                  />
-                </div>
-                
-                {/* Orbiting particles */}
-                {[0, 1, 2].map((i) => (
-                  <motion.div
-                    key={i}
-                    animate={{
-                      rotate: 360,
-                    }}
-                    transition={{
-                      duration: 3 + i * 0.5,
-                      repeat: Infinity,
-                      ease: "linear",
-                      delay: i * 0.4
-                    }}
-                    className="absolute inset-0"
-                    style={{ transformOrigin: 'center' }}
-                  >
-                    <motion.div
-                      animate={{
-                        scale: [1, 1.3, 1],
-                        opacity: [0.7, 1, 0.7]
-                      }}
-                      transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                        delay: i * 0.3
-                      }}
-                      className="absolute top-0 left-1/2 w-3 h-3 rounded-full -ml-1.5"
-                      style={{
-                        background: i === 0 
-                          ? 'linear-gradient(135deg, #22d3ee, #3b82f6)'
-                          : i === 1
-                          ? 'linear-gradient(135deg, #3b82f6, #8b5cf6)'
-                          : 'linear-gradient(135deg, #8b5cf6, #a855f7)',
-                        boxShadow: `0 0 20px ${i === 0 ? 'rgba(34,211,238,0.8)' : i === 1 ? 'rgba(59,130,246,0.8)' : 'rgba(168,85,247,0.8)'}`
-                      }}
-                    />
-                  </motion.div>
-                ))}
-
-                {/* Smooth rotating halo */}
-                <motion.div
-                  animate={{ rotate: -360 }}
-                  transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                  className="absolute inset-0 rounded-full opacity-40"
-                  style={{
-                    background: 'conic-gradient(from 0deg, transparent 0%, rgba(59,130,246,0.6) 25%, transparent 50%, rgba(168,85,247,0.6) 75%, transparent 100%)',
-                    filter: 'blur(2px)'
-                  }}
-                />
-              </div>
-
-              {/* Elegant name display */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, ease: "easeOut", delay: 0.3 }}
-                className="flex flex-col items-center gap-3"
-              >
-                <motion.h2
-                  animate={{ backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
-                  className="text-3xl font-bold bg-gradient-to-r from-cyan-400 via-blue-400 via-violet-400 to-fuchsia-400 bg-clip-text text-transparent tracking-tight"
-                  style={{ backgroundSize: '200% 200%' }}
-                >
-                  Mohammad Alim
-                </motion.h2>
-                
-                {/* Stylish loading indicator */}
-                <div className="flex items-center gap-2">
-                  <span className="text-slate-300 text-sm font-medium tracking-wide">Loading</span>
-                  <div className="flex gap-1.5">
-                    {[0, 1, 2].map((i) => (
-                      <motion.div
-                        key={i}
-                        animate={{
-                          scale: [1, 1.4, 1],
-                          opacity: [0.4, 1, 0.4],
-                        }}
-                        transition={{
-                          duration: 1.2,
-                          repeat: Infinity,
-                          delay: i * 0.15,
-                          ease: "easeInOut"
-                        }}
-                        className="w-2 h-2 rounded-full"
-                        style={{
-                          background: 'linear-gradient(135deg, #3b82f6, #a855f7)',
-                          boxShadow: '0 0 8px rgba(59,130,246,0.6)'
-                        }}
-                      />
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Sleek progress bar */}
-              <motion.div
-                initial={{ opacity: 0, scaleX: 0.8 }}
-                animate={{ opacity: 1, scaleX: 1 }}
-                transition={{ duration: 0.6, ease: "easeOut", delay: 0.5 }}
-                className="relative w-64 h-1.5 bg-slate-800/50 rounded-full overflow-hidden backdrop-blur-sm"
-              >
-                <motion.div
-                  animate={{
-                    x: ['-100%', '100%']
-                  }}
-                  transition={{
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                  className="absolute inset-0 w-1/2 rounded-full"
-                  style={{
-                    background: 'linear-gradient(90deg, transparent, rgba(59,130,246,0.8), rgba(168,85,247,0.8), transparent)',
-                    boxShadow: '0 0 15px rgba(59,130,246,0.5)'
-                  }}
-                />
-              </motion.div>
-            </motion.div>
-          )}
-
-          {/* Floating particles */}
-          {!isMobile && [...Array(particleCount)].map((_, i) => (
-            <motion.div
-              key={i}
-              initial={{
-                x: Math.random() * viewportW,
-                y: Math.random() * viewportH,
-                scale: 0,
-                opacity: 0,
-              }}
-              animate={{
-                y: [null, Math.random() * viewportH],
-                x: [null, Math.random() * viewportW],
-                scale: [0, Math.random() * (lightMode ? 0.8 : 1) + 0.4, 0],
-                opacity: [0, lightMode ? 0.45 : 0.6, 0],
-              }}
-              transition={{
-                duration: (lightMode ? 3.5 : 2) + Math.random() * (lightMode ? 2.5 : 3),
-                repeat: Infinity,
-                delay: Math.random() * 2,
-                ease: "easeInOut"
-              }}
-              className="absolute w-1 h-1 rounded-full bg-cyan-400 transform-gpu"
-              style={{
-                boxShadow: '0 0 10px rgba(34, 211, 238, 0.8)',
-              }}
-            />
-          ))}
-        </motion.div>
-      )}
-    </AnimatePresence>
+        </div>
+        <div className="longfazers">
+          <span /><span /><span /><span />
+        </div>
+        <div className="status">
+          <span className="status-text">Loading Alim's Portfolio...</span>
+        </div>
+      </div>
+    </StyledWrapper>
   );
-};
+}
+
+const StyledWrapper = styled.div`
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #050505;
+
+  .loader {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-left: -50px;
+    animation: speeder 0.6s linear infinite;
+    filter: drop-shadow(0 4px 24px rgba(56,189,248,0.35));
+  }
+  .loader > span {
+    height: 5px;
+    width: 35px;
+    background: linear-gradient(90deg, #5eead4 0%, #60a5fa 45%, #a78bfa 100%);
+    position: absolute;
+    top: -19px;
+    left: 60px;
+    border-radius: 2px 10px 1px 0;
+  }
+  .base span {
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-top: 6px solid transparent;
+    border-right: 100px solid #60a5fa;
+    border-bottom: 6px solid transparent;
+  }
+  .base span:before {
+    content: "";
+    height: 22px;
+    width: 22px;
+    border-radius: 50%;
+    background: #5eead4;
+    position: absolute;
+    right: -110px;
+    top: -16px;
+    box-shadow: 0 0 18px rgba(94,234,212,0.55);
+  }
+  .base span:after {
+    content: "";
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-top: 0 solid transparent;
+    border-right: 55px solid #a78bfa;
+    border-bottom: 16px solid transparent;
+    top: -16px;
+    right: -98px;
+  }
+  .face {
+    position: absolute;
+    height: 12px;
+    width: 20px;
+    background: #7c3aed;
+    border-radius: 20px 20px 0 0;
+    transform: rotate(-40deg);
+    right: -125px;
+    top: -15px;
+    box-shadow: 0 0 12px rgba(124,58,237,0.55);
+  }
+  .face:after {
+    content: "";
+    height: 12px;
+    width: 12px;
+    background: #5eead4;
+    right: 4px;
+    top: 7px;
+    position: absolute;
+    transform: rotate(40deg);
+    transform-origin: 50% 50%;
+    border-radius: 0 0 0 2px;
+    box-shadow: 0 0 10px rgba(34,211,238,0.7);
+  }
+  .loader > span > span:nth-child(1),
+  .loader > span > span:nth-child(2),
+  .loader > span > span:nth-child(3),
+  .loader > span > span:nth-child(4) {
+    width: 30px;
+    height: 1px;
+    background: linear-gradient(90deg, #5eead4, #60a5fa);
+    position: absolute;
+    animation: fazer1 0.4s linear infinite;
+  }
+  .loader > span > span:nth-child(2) {
+    top: 3px;
+    animation: fazer2 0.6s linear infinite;
+  }
+  .loader > span > span:nth-child(3) {
+    top: 1px;
+    animation: fazer3 0.6s linear infinite;
+    animation-delay: -1s;
+  }
+  .loader > span > span:nth-child(4) {
+    top: 4px;
+    animation: fazer4 1.2s linear infinite;
+    animation-delay: -1s;
+  }
+  @keyframes fazer1 {
+    0% { left: 0; opacity: 1; }
+    100% { left: -80px; opacity: 0; }
+  }
+  @keyframes fazer2 {
+    0% { left: 0; opacity: 1; }
+    100% { left: -100px; opacity: 0; }
+  }
+  @keyframes fazer3 {
+    0% { left: 0; opacity: 1; }
+    100% { left: -50px; opacity: 0; }
+  }
+  @keyframes fazer4 {
+    0% { left: 0; opacity: 1; }
+    100% { left: -150px; opacity: 0; }
+  }
+  @keyframes speeder {
+    0% { transform: translate(2px, 1px) rotate(0deg); }
+    10% { transform: translate(-1px, -3px) rotate(-1deg); }
+    20% { transform: translate(-2px, 0px) rotate(1deg); }
+    30% { transform: translate(1px, 2px) rotate(0deg); }
+    40% { transform: translate(1px, -1px) rotate(1deg); }
+    50% { transform: translate(-1px, 3px) rotate(-1deg); }
+    60% { transform: translate(-1px, 1px) rotate(0deg); }
+    70% { transform: translate(3px, 1px) rotate(-1deg); }
+    80% { transform: translate(-2px, -1px) rotate(1deg); }
+    90% { transform: translate(2px, 1px) rotate(0deg); }
+    100% { transform: translate(1px, -2px) rotate(-1deg); }
+  }
+  .longfazers {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+  }
+  .longfazers span {
+    position: absolute;
+    height: 2px;
+    width: 20%;
+    background: linear-gradient(90deg, #5eead4, #a78bfa);
+    box-shadow: 0 0 10px rgba(94,234,212,0.5);
+  }
+  .longfazers span:nth-child(1) { top: 20%; animation: lf 0.8s linear infinite; animation-delay: -5s; }
+  .longfazers span:nth-child(2) { top: 40%; animation: lf2 1s linear infinite; animation-delay: -1s; }
+  .longfazers span:nth-child(3) { top: 60%; animation: lf3 0.8s linear infinite; }
+  .longfazers span:nth-child(4) { top: 80%; animation: lf4 0.7s linear infinite; animation-delay: -3s; }
+
+  @keyframes lf { 0% { left: 200%; } 100% { left: -200%; opacity: 0; } }
+  @keyframes lf2 { 0% { left: 200%; } 100% { left: -200%; opacity: 0; } }
+  @keyframes lf3 { 0% { left: 200%; } 100% { left: -100%; opacity: 0; } }
+  @keyframes lf4 { 0% { left: 200%; } 100% { left: -100%; opacity: 0; } }
+
+  .status {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-align: center;
+    padding-top: 110px;
+  }
+  .status-text {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    background: linear-gradient(90deg, #38bdf8 0%, #60a5fa 45%, #a855f7 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 16px rgba(56,189,248,0.35));
+    animation: pulseText 1.6s ease-in-out infinite;
+  }
+
+  @keyframes pulseText {
+    0% { opacity: 0.75; }
+    50% { opacity: 1; }
+    100% { opacity: 0.75; }
+  }
+`;
 
 export default PageLoader;

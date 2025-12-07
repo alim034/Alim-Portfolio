@@ -121,29 +121,43 @@ export default function Skills() {
                     viewport={{ once: false, amount: 0.15 }}
                     className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
                 >
-                    {groups.map((g) => (
-                        <motion.div
-                            key={g.title}
-                            variants={cardVariants}
-                            whileHover={{ y: -8, scale: 1.02 }}
-                            transition={{ type: 'spring', stiffness: 300, damping: 20 }}
-                            className="group relative rounded-2xl overflow-hidden p-7 md:p-8
-                                       backdrop-blur-md
-                                       border-2 shadow-lg shadow-black/30
-                                       hover:shadow-2xl
-                                       transition-all duration-500 ease-out"
-                            style={{ 
-                                background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.9) 0%, rgba(30, 41, 59, 0.8) 100%)',
-                                borderColor: 'rgba(56, 189, 248, 0.3)',
-                            }}
+                {groups.map((g) => (
+                    <motion.div
+                        key={g.title}
+                        variants={cardVariants}
+                        whileHover={{ y: -8, scale: 1.02 }}
+                        transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+                        className="group relative rounded-3xl overflow-hidden p-7 md:p-8
+                        backdrop-blur-xl border transition-all duration-600 ease-out
+                        shadow-[0_0_32px_rgba(0,0,0,0.35)]
+                        hover:shadow-[0_0_55px_rgba(56,189,248,0.45)]"
+                        style={{
+                            background:
+                            'linear-gradient(140deg, rgba(10,16,32,0.9) 0%, rgba(16,25,46,0.9) 45%, rgba(9,14,27,0.92) 100%)',
+                            borderColor: 'rgba(56,189,248,0.28)',
+                            boxShadow:
+                            'inset 0 0 20px rgba(56,189,248,0.08), 0 0 40px rgba(0,0,0,0.65)',
+                        }}
+
                         >
-                            {/* Animated Background Gradient Overlay */}
-                            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out pointer-events-none"
-                                 style={{
-                                     background: 'radial-gradient(circle at 50% 0%, rgba(6, 182, 212, 0.15), transparent 70%)'
-                                 }} />
+                        {/* Animated Background Gradient Overlay */}
+                        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 ease-out pointer-events-none"
+                        style={{
+                            background: 'radial-gradient(circle at 40% 0%, rgba(6, 182, 212, 0.16), rgba(59, 130, 246, 0.12), transparent 75%)'
+                        }} />
+
+                        {/* Ambient glow layer */}
+                        <div className="absolute inset-0 opacity-70 blur-3xl pointer-events-none"
+                             style={{
+                               background: 'radial-gradient(circle at 30% 30%, rgba(6, 182, 212, 0.12), transparent 45%), radial-gradient(circle at 75% 20%, rgba(59, 130, 246, 0.1), transparent 50%), radial-gradient(circle at 50% 85%, rgba(147, 51, 234, 0.12), transparent 55%)'
+                             }} />
+
+                                                {/* Border glow overlay */}
+                                                <div className="absolute inset-0 rounded-3xl border border-cyan-400/30 opacity-0 group-hover:opacity-100 transition-opacity duration-600 pointer-events-none"
+                                                         style={{ boxShadow: '0 0 22px rgba(56,189,248,0.35)' }} />
+
                             
-                            {/* Category Title */}
+                        {/* Category Title */}
                             <h3 className="relative text-xl md:text-2xl font-bold tracking-wide mb-6 md:mb-7 transition-all duration-500"
                                 style={{
                                     background: 'linear-gradient(135deg, #f0f9ff 0%, #dbeafe 50%, #bfdbfe 100%)',
@@ -154,15 +168,15 @@ export default function Skills() {
                                 {g.title}
                             </h3>
 
-                            {/* Skills Items Container */}
-                            <div className={
+                        {/* Skills Items Container */}
+                        <div className={
                                 g.title === 'Professional Skills'
                                 ? "relative grid grid-cols-2 gap-x-4 gap-y-3"
                                 : "relative flex flex-wrap gap-3"
-                            }>
-                                {g.items.map((item) => {
-                                    const Icon = item.icon;
-                                    const [isHovered, setIsHovered] = React.useState(false);
+                        }>
+                        {g.items.map((item) => {
+                                const Icon = item.icon;
+                                const [isHovered, setIsHovered] = React.useState(false);
                                     return (
                                         <motion.div
                                             key={item.name}
@@ -170,38 +184,36 @@ export default function Skills() {
                                             transition={{ type: 'spring', stiffness: 400, damping: 25 }}
                                             onMouseEnter={() => setIsHovered(true)}
                                             onMouseLeave={() => setIsHovered(false)}
-                                            className={`group/item relative flex items-center gap-2.5 px-4 py-3 rounded-xl
-                                                       backdrop-blur-md border-2
-                                                       transition-all duration-300 ease-out cursor-default
-                                                       ${g.title === 'Professional Skills' ? '' : 'max-w-max'}`}
-                                            style={{ 
-                                                background: isHovered 
-                                                    ? 'linear-gradient(135deg, rgba(6, 182, 212, 0.35) 0%, rgba(59, 130, 246, 0.4) 50%, rgba(99, 102, 241, 0.35) 100%)'
-                                                    : 'linear-gradient(135deg, rgba(15, 23, 42, 0.8) 0%, rgba(30, 58, 138, 0.6) 50%, rgba(37, 99, 235, 0.4) 100%)',
-                                                borderColor: isHovered ? 'rgba(34, 211, 238, 0.8)' : 'rgba(100, 116, 139, 0.3)',
-                                                boxShadow: isHovered ? '0 8px 32px rgba(6, 182, 212, 0.3), 0 0 0 1px rgba(34, 211, 238, 0.2) inset' : 'none',
-                                                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)'
-                                            }}
-                                        >
-                                            <Icon
-                                                className={`w-5 h-5 ${item.color} flex-shrink-0 transition-transform duration-300 group-hover/item:scale-110`}
-                                                style={{ filter: `drop-shadow(0 0 4px currentColor)` }}
-                                            />
-                                            {/* Removed whitespace-nowrap to allow wrapping */}
-                                            <span className="text-sm font-medium text-slate-200 group-hover/item:text-white transition-colors duration-300">
-                                                {item.name}
-                                            </span>
-                                        </motion.div>
-                                    );
-                                })}
-                            </div>
+                        className={`group/item relative flex items-center gap-2.5 px-4 py-3 rounded-xl backdrop-blur-xl border transition-all duration-400 ease-out cursor-default`}
+                        style={{
+                            background: isHovered
+                            ? 'linear-gradient(135deg, rgba(6,182,212,0.28) 0%, rgba(59,130,246,0.32) 50%, rgba(147,51,234,0.28) 100%)'
+                            : 'linear-gradient(135deg, rgba(13,20,36,0.65) 0%, rgba(24,32,52,0.6) 50%, rgba(13,20,36,0.65) 100%)',
+                            borderColor: isHovered ? 'rgba(6,182,212,0.6)' : 'rgba(148,163,184,0.28)',
+                            boxShadow: isHovered
+                            ? '0 12px 32px rgba(6,182,212,0.22), 0 0 18px rgba(6,182,212,0.28)'
+                            : 'inset 0 0 10px rgba(0,0,0,0.32)',
+                        }}
+                >
+                <Icon
+                    className={`w-5 h-5 ${item.color} transition-transform duration-300 group-hover/item:scale-125`}
+                    style={{ filter: `drop-shadow(0 0 6px currentColor)` }}
+                />
 
-                            {/* Decorative Glow Effect - Enhanced */}
-                            <div className="absolute -inset-[2px] rounded-2xl opacity-0 group-hover:opacity-100 blur-2xl
-                                            transition-all duration-700 pointer-events-none -z-10"
-                                 style={{
-                                     background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.4), rgba(59, 130, 246, 0.4), rgba(147, 51, 234, 0.3))'
-                                 }} />
+                <span className="text-sm font-medium text-slate-200 group-hover/item:text-white tracking-wide">
+                {item.name}
+                </span>
+
+                    </motion.div>
+                    );
+                        })}
+                </div>
+
+                    {/* Decorative Glow Effect - Enhanced */}
+                        <div className="absolute -inset-[2px] rounded-2xl opacity-0 group-hover:opacity-100 blur-2xl transition-all duration-700 pointer-events-none -z-10"
+                        style={{
+                                    background: 'linear-gradient(135deg, rgba(6, 182, 212, 0.3), rgba(59, 130, 246, 0.3), rgba(147, 51, 234, 0.25))'
+                                }} />
                         </motion.div>
                     ))}
                 </motion.div>
