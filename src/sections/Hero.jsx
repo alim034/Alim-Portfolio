@@ -14,7 +14,7 @@ export default function Hero() {
   const [idx, setIdx] = useState(0)
 
   // Prefer external resume link via env; fallback to local file
-  const resumeUrl = import.meta.env.VITE_RESUME_URL || 'https://drive.google.com/file/d/1_5EyNIl5vTnmFjsZGv7rfw8BC4jrDDye/view?usp=sharing'
+  const resumeUrl = import.meta.env.VITE_RESUME_URL || 'https://drive.google.com/file/d/1qj0rZwUuyg2LUji6JDlq4k2wGcNtJGEA/view?usp=sharing'
   const isExternalResume = /^https?:\/\//.test(resumeUrl)
 
   useEffect(() => {
